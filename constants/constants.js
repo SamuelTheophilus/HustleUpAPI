@@ -2,7 +2,9 @@ const routeStrings = {
   Hompage: 'homepage', 
   Notification: 'notification', 
   Profile: 'profile',
-  Payments: 'payments'
+  Payments: 'payments',
+  SignUp: 'signuppage',
+  LogIn: 'loginpage'
 }
 
 
