@@ -1,23 +1,34 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const HomePageRouter = require('./routes/homepageRoutes');
-const NotificationRouter = require('./routes/notificationRoutes');
-const PaymentRouter = require('./routes/paymentRoutes');
-const ProfileRouter = require('./routes/profileRoutes');
+const mongoose = require('mongoose');
+const HomePageRoutes = require('./routes/homepageRoutes');
+const NotificationRoutes = require('./routes/notificationRoutes');
+const PaymentRoutes = require('./routes/paymentRoutes');
+const ProfileRoutes = require('./routes/profileRoutes');
+const authRoutes = require('./routes/authRoutes')
 
+// variables from .env file
 dotenv.config({ path: 'config.env' });
 const PORT = process.env.PORT || 4000;
+const dbURI = process.env.dbURI
 
-app.listen(PORT, () => {
-  console.log(`Backend server is running on port ${PORT}`)
-});
+//middleware
+app.use(express.json());
 
 
-// Home
-app.use('/', HomePageRouter);
-app.use('/', NotificationRouter);
-app.use('/', PaymentRouter);
-app.use('/', ProfileRouter);
+// connect to database.
+mongoose
+  .connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then((result) => app.listen(PORT, ()=>{console.log(`Backend server is running on port ${PORT}`)}))
+  .catch(err => {console.log(err)});
+
+
+// routes.
+app.use(HomePageRoutes);
+app.use(NotificationRoutes);
+app.use(PaymentRoutes);
+app.use(ProfileRoutes);
+app.use(authRoutes);
 
 
