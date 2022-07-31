@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
-const { isEmail , isNumber } = require('validator');
+const { isEmail, isNumber } = require('validator');
 
 
 const generalUsersSchema = new mongoose.Schema({
@@ -19,7 +19,7 @@ const generalUsersSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: [true, 'Please enter a password'],
-    minlength:[8, 'Password must be at least 8 characters'],
+    minlength: [8, 'Password must be at least 8 characters'],
   },
 })
 
@@ -32,10 +32,19 @@ generalUsersSchema.pre('save', async function (next) {
   next();
 });
 
-generalUsersSchema.post('save', async function (doc, next){
-  console.log("new user has been saved ", doc)
-  next();
-})
+generalUsersSchema.statics.login = async function ( email, password) {
+
+  const user = await this.findOne({ email: email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password)
+    if (auth) {
+      return user;
+    }
+    throw Error('Invalid password')
+  }
+  throw Error('incorrect email')
+}
+
 
 
 const GeneralUser = mongoose.model('generalusers', generalUsersSchema);
