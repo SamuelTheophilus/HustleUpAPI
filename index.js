@@ -7,6 +7,7 @@ const NotificationRoutes = require('./routes/notificationRoutes');
 const PaymentRoutes = require('./routes/paymentRoutes');
 const ProfileRoutes = require('./routes/profileRoutes');
 const authRoutes = require('./routes/authRoutes')
+const {checkUser} = require('./middleware/authMiddleware')
 
 // variables from .env file
 dotenv.config({ path: 'config.env' });
@@ -25,6 +26,7 @@ mongoose
 
 
 // routes.
+app.get('*', checkUser);
 app.use(HomePageRoutes);
 app.use(NotificationRoutes);
 app.use(PaymentRoutes);

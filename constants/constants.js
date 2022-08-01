@@ -3,8 +3,9 @@ const routeStrings = {
   Notification: 'notification', 
   Profile: 'profile',
   Payments: 'payments',
-  SignUp: 'signuppage',
-  LogIn: 'loginpage'
+  SignUp: 'signup',
+  LogIn: 'login',
+  LogOut: 'logout'
 }
 
 

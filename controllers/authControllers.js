@@ -17,7 +17,7 @@ const handleError = (err) => {
   if (err.message ==="incorrect email"){
     customError.email = "This email does not exist"
   }
-  
+
   // incorrect password
   if (err.message ==="Invalid password"){
     customError.password = "The password is invalid"
@@ -93,10 +93,16 @@ const signup_post = async (req, res) => {
 
 }
 
+const logout_get = (req, res)=>{
+ res.cookie('jwt', '', {maxAge: 1})
+ res.redirect('/')
+}
+
 
 module.exports = {
   login_get,
   login_post,
   signup_get,
-  signup_post
+  signup_post, 
+  logout_get
 }
