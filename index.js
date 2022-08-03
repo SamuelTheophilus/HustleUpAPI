@@ -6,7 +6,8 @@ const HomePageRoutes = require('./routes/homepageRoutes');
 const NotificationRoutes = require('./routes/notificationRoutes');
 const PaymentRoutes = require('./routes/paymentRoutes');
 const ProfileRoutes = require('./routes/profileRoutes');
-const authRoutes = require('./routes/authRoutes')
+const CategoryRoutes = require('./routes/categoryRoutes');
+const authRoutes = require('./routes/authRoutes');
 const {checkUser} = require('./middleware/authMiddleware')
 
 // variables from .env file
@@ -26,11 +27,12 @@ mongoose
 
 
 // routes.
-app.get('*', checkUser);
+// app.get('*', checkUser);
 app.use(HomePageRoutes);
 app.use(NotificationRoutes);
 app.use(PaymentRoutes);
 app.use(ProfileRoutes);
 app.use(authRoutes);
+app.use(CategoryRoutes);
 
 
