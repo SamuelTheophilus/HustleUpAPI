@@ -1,13 +1,17 @@
-const routeStrings = {
-  Hompage: 'homepage', 
-  Notification: 'notification', 
-  Profile: 'profile',
-  Payments: 'payments',
-  SignUp: 'signup',
-  LogIn: 'login',
-  LogOut: 'logout'
+const constants = {
+  hompage: '/homepage', 
+  notification: '/notification', 
+  users: '/users',
+  payments: '/payments',
+  signup: '/signup',
+  login: '/login',
+  logout: '/logout',
+  Subcategory: '/subcategory',
+  category: '/Category',
+  request: '/request',
+  ID: '/:id',
 }
 
 
 
-module.exports = {routeStrings};
+module.exports = constants;

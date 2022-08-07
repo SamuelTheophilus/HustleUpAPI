@@ -21,7 +21,15 @@ const generalUsersSchema = new mongoose.Schema({
     required: [true, 'Please enter a password'],
     minlength: [8, 'Password must be at least 8 characters'],
   },
-})
+  reference: {
+    type: Number,
+    required: false,
+  },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  }
+});
 
 
 
@@ -32,8 +40,9 @@ generalUsersSchema.pre('save', async function (next) {
   next();
 });
 
-generalUsersSchema.statics.login = async function ( email, password) {
 
+
+generalUsersSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email: email });
   if (user) {
     const auth = await bcrypt.compare(password, user.password)
@@ -48,6 +57,4 @@ generalUsersSchema.statics.login = async function ( email, password) {
 
 
 const GeneralUser = mongoose.model('generalusers', generalUsersSchema);
-
-
 module.exports = GeneralUser;

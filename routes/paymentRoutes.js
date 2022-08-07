@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const {routeStrings} = require('../constants/constants')
+const {constants} = require('../constants/constants')
 
 
-router.get('/' + routeStrings.Payments, (req, res)=>{
+router.get(constants.payments, (req, res)=>{
   res.send('This is the payment section')
 })
 

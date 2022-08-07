@@ -1,9 +1,11 @@
 const router = require('express').Router();
-const {routeStrings} = require('../constants/constants')
-
-router.get('/' + routeStrings.Notification, (req, res) => {
-  res.send('This is the notification page')
-});
+const constants = require('../constants/constants')
+const controller = require('../controllers/notificationsControllers');
+const { requireAuth } = require('../middleware/authMiddleware');
 
 
-module.exports =  router;
+router.get(constants.notification, controller.getAllNotfications);
+router.post(constants.notification, controller.postNotfications);
+router.delete(constants.notification, controller.deleteNotfications);
+
+module.exports = router;

@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const {routeStrings} = require('../constants/constants');
-const {requireAuth} = require('../middleware/authMiddleware');
+const { constants } = require('../constants/constants');
+const { requireAuth } = require('../middleware/authMiddleware');
 
 
-router.get('/' + routeStrings.Hompage, requireAuth , (req, res) => {
+router.get(constants.hompage, requireAuth, (req, res) => {
   res.send('This is the home page')
 })
 
 
 
-module.exports =  router;
+module.exports = router;          

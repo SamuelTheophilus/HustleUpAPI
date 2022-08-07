@@ -6,13 +6,12 @@ const categoriesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subcategory: {
+  subcategories: {
     type: Array,
   },
 });
 
 const Categories = mongoose.model('categories', categoriesSchema);
-
 module.exports = Categories;
 
 

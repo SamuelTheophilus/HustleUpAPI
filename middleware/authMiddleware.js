@@ -28,7 +28,9 @@ const requireAuth = (req, res, next) => {
 // check the current user
 
 const checkUser = (req, res, next) => {
+  console.log(req.cookies);
   const token = req.cookies.jwt;
+
 
   if (token) {
     jwt.verify(token, 'HUSTLEUPAISECRET', async (err, decodedToken) => {
