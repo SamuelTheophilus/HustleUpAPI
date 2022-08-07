@@ -13,13 +13,17 @@ const getAllCategories = (req, res) => {
 
 
 // get a single category
-const getSingleCategory = (req, res) => {
+const getSingleCategory = async (req, res) => {
 
-  const id = req.query.id;
 
-  Categories.findById(id)
-    .then((result) => { res.json({ result: result }) })
-    .catch((err) => { res.send(err); });
+  try{
+    const id = req.query.id;
+    const category = await Categories.findById(id);
+    res.status(200).json({ category });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+  
 
 
 };
@@ -35,6 +39,7 @@ const addSingleCategory = async (req, res) => {
   }
   catch (err) {
     console.log(err);
+    res.json({err });
   }
 }
 

@@ -17,9 +17,11 @@ const getAllNotfications = async (req, res) => {
 
 const postNotfications = async (req, res) => {
 
-  const description = Request.description;
-  const employerId = Request.employerId;
-  const location = Request.location;
+  // const description = Request.description;
+  // const employerId = Request.employerId;
+  // const location = Request.location;
+
+  const { description, employerId, location } = req.body;
 
   try {
     const notification = await Notification.create({ description, employerId, location });
@@ -31,7 +33,7 @@ const postNotfications = async (req, res) => {
 }
 
 const deleteNotfications = async (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
 
   try {
     Notification.findByIdAndDelete(id)

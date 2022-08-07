@@ -1,12 +1,12 @@
 const {Router} = require('express');
-const controllers = require('../controllers/categoriesControllers');
+const controller = require('../controllers/categoriesControllers');
 const constants = require('../constants/constants');
 
 const router = Router();
 
-router.get(constants.category , controllers.getAllCategories);
-router.get(constants.category + constants.ID, controllers.getSingleCategory);
-router.post(constants.category , controllers.addSingleCategory);
+router.get((constants.category + constants.ID), controller.getSingleCategory);
+router.get(constants.category , controller.getAllCategories);
+router.post(constants.category , controller.addSingleCategory);
 
 
 module.exports =  router;

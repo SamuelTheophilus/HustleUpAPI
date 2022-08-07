@@ -34,12 +34,18 @@ const generalUsersSchema = new mongoose.Schema({
 
 
 //mongoose hooks
+generalUsersSchema.pre('findOneAndUpdate', async function(next){
+  const salt = await bcrypt.genSalt()
+  this._update.password = await bcrypt.hash(this._update.password, salt)
+  next();
+})
+
+
 generalUsersSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
-
 
 
 generalUsersSchema.statics.login = async function (email, password) {

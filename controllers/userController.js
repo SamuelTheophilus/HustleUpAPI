@@ -4,7 +4,7 @@ const generalUser = require('../models/generalUserModel');
 // update the user from the database.
 const updateUser = (req, res) => {
 
-  const id = req.params.id;
+  const id = req.query.id;
 
   generalUser.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((result) => { res.status(200).json({ message: 'user was updated successfully' }) })
@@ -15,9 +15,9 @@ const updateUser = (req, res) => {
 
 //delete user from the database
 const deleteUser = (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
 
-  generalUser.findByIdAndDelete(id)
+  generalUser.findOneAndDelete(id)
     .then((result) => { res.status(200).json({ message: 'user was deleted successfully' }) })
     .catch((err) => { res.status(500).json({ message: err.message }) });
 }
@@ -25,7 +25,7 @@ const deleteUser = (req, res) => {
 
 // Get a single user 
 const getSingleUser = async (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
 
   try {
     const user = await generalUser.findById(id);

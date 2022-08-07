@@ -16,7 +16,7 @@ const postRequest = async (req, res) => {
 
 //Updating a request
 const updateRequest = (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
   Request.findByIdAndUpdate(id, req.body, { userFindAndModify: false })
     .then((data) => res.status(200).json(data))
     .catch((err) => { res.status(500).json(err) });
@@ -27,7 +27,7 @@ const updateRequest = (req, res) => {
 //Deleting a Request.
 const deleteRequest = (req, res) => {
 
-  const id = req.params.id;
+  const id = req.query.id;
   Request.findByIdAndDelete(id)
     .then((data) => { res.send({ message: 'Request deleted' }) })
     .catch((err) => { res.status(500).json(err) });

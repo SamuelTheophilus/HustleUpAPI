@@ -3,16 +3,21 @@ const Subcategories = require('../models/subcategoriesModel');
 
 
 // Returns All the Subcategories From a Specified Category.
-const getAllSubCategories = (req, res) => {
-  Subcategories.find()
-    .then((result) => { res.json({ result: result }) })
-    .catch((err) => { res.status(err.statusCode || 500).json({ err: err }) })
+const getAllSubCategories = async (req, res) => {
+  try {
+    const result = await Subcategories.find()
+    res.json({ result})
+  } catch( error){
+    res.status(505).json({error: error.message})
+    console.log(error)
+  }
+   
 }
 
 
 //Get Single Subcategory By ID
 const getSingleSubcategory = async (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
 
   try {
     const result = await Subcategories.findById(id)

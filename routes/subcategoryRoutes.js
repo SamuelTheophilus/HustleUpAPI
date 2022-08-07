@@ -6,8 +6,8 @@ const { requireAuth } = require('../middleware/authMiddleware');
 const router = Router();
 
 
-router.get('/subcategories', controller.getAllSubCategories);
-router.get('/subcategories/:id', controller.getSingleSubcategory);
+router.get(constants.subcategories, controller.getAllSubCategories);
+router.get(constants.subcategories+constants.ID, controller.getSingleSubcategory);
 
 
 module.exports = router;

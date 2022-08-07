@@ -10,7 +10,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const profileRoutes = require('./routes/userRoutes');
 const requestRoutes = require('./routes/requestRoutes');
-const subcategory = require('./routes/subcategoryRoutes');
+const subcategoryRoutes = require('./routes/subcategoryRoutes');
 
 
 // Other Dependencies
@@ -42,6 +42,6 @@ app.use(categoryRoutes);
 app.use(notificationRoutes);
 app.use(profileRoutes);
 app.use(requestRoutes);
-app.use(subcategory);
+app.use(subcategoryRoutes);
 
 
