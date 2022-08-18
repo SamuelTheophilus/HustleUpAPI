@@ -17,10 +17,6 @@ const getAllNotfications = async (req, res) => {
 
 const postNotfications = async (req, res) => {
 
-  // const description = Request.description;
-  // const employerId = Request.employerId;
-  // const location = Request.location;
-
   const { description, employerId, location } = req.body;
 
   try {

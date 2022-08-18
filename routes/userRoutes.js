@@ -11,4 +11,11 @@ router.put(constants.users,  controller.updateUser);
 router.get(constants.users + constants.ID,controller.getSingleUser);
 
 
+
+
+// Employee Controllers
+router.get(constants.employee + constants.ID,controller.getSingleEmployee);
+router.put(constants.employee, controller.updateEmployee);
+
+
 module.exports = router;

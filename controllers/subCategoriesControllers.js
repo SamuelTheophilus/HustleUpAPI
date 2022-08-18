@@ -1,4 +1,5 @@
 const Subcategories = require('../models/subcategoriesModel');
+const generalUser = require('../models/generalUserModel');
 
 
 
@@ -20,8 +21,8 @@ const getSingleSubcategory = async (req, res) => {
   const id = req.query.id;
 
   try {
-    const result = await Subcategories.findById(id)
-    res.status(200).json({ result: result });
+    const employee = await generalUser.find({subcategoryId: id});
+    res.status(200).json({ employee: employee });
 
   } catch (error) {
     res.status(500).send({ err: error.message });

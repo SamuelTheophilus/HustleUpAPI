@@ -9,7 +9,9 @@ const constants = {
   subcategories: '/subcategories',
   category: '/categories',
   request: '/request',
+  employee : '/employee',
   ID: '/:id',
+  verify: '/verify'
 }
 
 

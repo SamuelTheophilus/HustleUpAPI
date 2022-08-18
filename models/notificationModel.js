@@ -5,7 +5,7 @@ const notificationSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  employerId: {
+  username: {
     type: String,
     required: true,
   },

@@ -1,14 +1,19 @@
 const { Router } = require('express');
 const router = Router();
 const controllers = require('../controllers/authControllers')
-const constants  = require('../constants/constants')
+const constants = require('../constants/constants')
+
+// General User Controllers 
+router.post(constants.login, controllers.login_post);
+router.post(constants.signup, controllers.genUserSignup);
+router.get(constants.logout, controllers.logout_get);
+router.get(constants.verify + constants.ID, controllers.verify)
 
 
-router.get(constants.signup, controllers.signup_get)
-router.post(constants.signup, controllers.signup_post)
-router.get(constants.login, controllers.login_get)
-router.post(constants.login, controllers.login_post)
-router.get(constants.logout, controllers.logout_get)
+// Employee Controllers
+router.post(constants.employee + constants.signup, controllers.employeesignup);
+
+
 
 
 module.exports = router;

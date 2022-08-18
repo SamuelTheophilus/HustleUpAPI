@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Samuel Theophilus Ansah",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
@@ -18,6 +18,7 @@
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.6",
+    "nodemailer": "^6.7.8",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "validator": "^13.7.0"
