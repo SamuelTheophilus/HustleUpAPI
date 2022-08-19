@@ -4,10 +4,6 @@ const subCategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-  },
-  employeesId: {
-    type: Array,
-    required: true
   }
 });
 

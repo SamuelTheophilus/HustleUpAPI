@@ -11,7 +11,8 @@ const constants = {
   request: '/request',
   employee : '/employee',
   ID: '/:id',
-  verify: '/verify'
+  verify: '/verify',
+  review: '/review'
 }
 
 

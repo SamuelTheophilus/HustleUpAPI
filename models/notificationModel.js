@@ -12,6 +12,10 @@ const notificationSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true
+  },
+  matchedEmployees: {
+    type: Array,
+    required: false
   }
 });
 

@@ -4,8 +4,11 @@ const Request = require('../models/requestModel');
 
 const getAllNotfications = async (req, res) => {
 
+  const id = req.query.id;
+
+
   try {
-    const results = await Notification.find();
+    const results = await Notification.find({matchedEmployees: id});
     res.status(200).json(results);
   }
   catch (error) {

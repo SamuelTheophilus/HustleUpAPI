@@ -30,9 +30,24 @@ const getSingleSubcategory = async (req, res) => {
   }
 }
 
+
+
+
+//Temporary Controller, Delete after Creating the Subcategory
+const addsubcategory = async (req, res) => {
+  const {name} = req.body;
+
+  const newsub = await Subcategories.create({name: name});
+  if (newsub){
+    res.send('Sub created')
+  }
+
+}
+
 // TODO: Create an add Employer's ID controller over here.
 
 module.exports = {
   getAllSubCategories,
   getSingleSubcategory,
+  addsubcategory
 }
