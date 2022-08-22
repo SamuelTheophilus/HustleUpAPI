@@ -24,16 +24,18 @@ const PORT = process.env.PORT || 4000;
 const dbURI = process.env.dbURI
 
 //middleware
+app.set('view engine', 'ejs')
 app.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
 // connect to database.
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(PORT, () => { console.log(`Backend server is running on port ${PORT}`) }))
+  .then((result) => app.listen(PORT, () => { console.log(`Backend server is running on port ${PORT}🚀`) }))
   .catch(err => { console.log(err) });
-
 
 // Using Routes
 app.use(authRoutes);

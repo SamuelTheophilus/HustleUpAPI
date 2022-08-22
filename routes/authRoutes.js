@@ -8,6 +8,9 @@ router.post(constants.login, controllers.login_post);
 router.post(constants.signup, controllers.genUserSignup);
 router.get(constants.logout, controllers.logout_get);
 router.get(constants.verify + constants.ID, controllers.verify)
+router.post(constants.users + constants.resetpassword, controllers.forgotPassword)
+router.get(constants.verify + constants.password + constants.ID, controllers.passwordform);
+router.post(constants.verify + constants.password, controllers.passwordVerify);
 
 
 // Employee Controllers

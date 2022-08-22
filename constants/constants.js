@@ -12,7 +12,9 @@ const constants = {
   employee : '/employee',
   ID: '/:id',
   verify: '/verify',
-  review: '/review'
+  review: '/review',
+  password: '/password',
+  resetpassword: '/resetpassword',
 }
 
 

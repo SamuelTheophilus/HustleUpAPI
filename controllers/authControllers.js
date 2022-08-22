@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config({ path: 'config.env' })
 const cookie = require('cookie-parser');
+const bcrypt = require('bcrypt');
 
 
 
@@ -215,10 +216,89 @@ const verify = async (req, res) => {
 
 }
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await generalUsers.findOne({ email: email })
+
+    const resetPasswordToken = user.generateVerificationToken();
+    const url = `http://localhost:8000/verify/password/${resetPasswordToken}`
+
+    let options = {
+      from: `"Verify Your Email", <${process.env.EMAIL_USERNAME}>`,
+      to: user.email,
+      subject: 'Reset Your Password',
+      html: `<h1> Hey ${user.name}! We've got you covered</h1>,
+         <h3> Please click on the link below to reset your password</h3>
+         Click <a href = '${url}'>here</a> to reset your password`
+
+    }
+
+
+    transporter.sendMail(options, function (err, info) {
+      if (err) {
+        console.log(err)
+      }
+    })
+
+
+    res.status(201).json({ message: `Sent a reset Password email to ${user.email}` })
+  } catch (error) {
+    res.status(404).json({ message: 'Error in sending reset password link' })
+
+
+  }
+}
+
+
+const passwordform = (req, res) => {
+  res.render('resetpassword', { title: 'Reset Your Passowrd' })
+
+}
+
+async function passwordVerify(req, res) {
+  const { email, password, password2 } = req.body;
+  
+  const existing_user = await generalUsers.findOne({ email: email });
+
+  if (!existing_user) {
+    return res.status(400).send({ message: 'user email does not exist' })
+  }
+
+
+  if (password !== password2) {
+    res.status(400).json({ message: 'Passwords do not match' })
+  }
+
+  try {
+
+    let salt = await bcrypt.genSalt();
+    new_password = await bcrypt.hash(password, salt);
+
+    let user = await generalUsers.findOneAndUpdate({ email: email }, { password: new_password }, {new: true})
+
+    if (!user) {
+      return res.status(400).send({ message: 'Password not set' });
+    } else {
+      return res.status(200).json({ message: 'New Password Reset' })
+    }
+
+  } catch (error) {
+    return res.status(500).send(error.message)
+  }
+
+
+}
+
 module.exports = {
   login_post,
   employeesignup,
   genUserSignup,
   logout_get,
-  verify
+  verify,
+  forgotPassword,
+  passwordform,
+  passwordVerify,
+
 }
