@@ -20,7 +20,7 @@ const app = express();
 
 // variables from .env file
 dotenv.config({ path: 'config.env' });
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8000;
 const dbURI = process.env.dbURI
 
 //middleware
