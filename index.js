@@ -21,7 +21,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 // variables from .env file
-dotenv.config({ path: 'config.env' });
+
 const PORT = process.env.PORT || 8000;
 const dbURI = process.env.dbURI
 
