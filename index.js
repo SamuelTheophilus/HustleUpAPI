@@ -36,8 +36,10 @@ app.use(cookieParser());
 // connect to database.
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(PORT, () => { console.log(`Backend server is running on port ${PORT}🚀`) }))
+  .then((result) => console.log('Database connected successfully'))
   .catch(err => { console.log(err) });
+
+app.listen(PORT, () => { console.log(`Backend server is running on port ${PORT}🚀`) })
 
 // Using Routes
 app.use(authRoutes);
