@@ -1,4 +1,4 @@
-const Subcategories = require('../models/subcategoriesModel');
+const Subcategories = require('../models/subCategoriesModel');
 const generalUser = require('../models/generalUserModel');
 
 

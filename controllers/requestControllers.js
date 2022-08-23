@@ -1,7 +1,7 @@
 const Request = require('../models/requestModel');
 const Notification = require('../models/notificationModel');
 const generalUser = require('../models/generalUserModel');
-const Subcategory = require('../models/subcategoriesModel');
+const Subcategory = require('../models/subCategoriesModel');
 const jwt = require('jsonwebtoken');
 
 
