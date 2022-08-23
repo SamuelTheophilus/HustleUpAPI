@@ -1,8 +1,9 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const { isEmail } = require('validator');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: 'config.env' })
 
 const generalUsersSchema = new mongoose.Schema({
   name: {
