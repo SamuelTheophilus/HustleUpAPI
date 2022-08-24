@@ -17,6 +17,4 @@ router.post(constants.verify + constants.password, controllers.passwordVerify);
 router.post(constants.employee + constants.signup, controllers.employeesignup);
 
 
-
-
 module.exports = router;
