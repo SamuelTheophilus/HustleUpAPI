@@ -63,10 +63,10 @@ const handleError = (err) => {
 
 /* lAuthentication Controllers.*/
 const login_post = async (req, res) => {
+  console.log(req.body)
   const { email, password } = req.body;
 
   try {
-    console.log(req.body)
     const user = await generalUsers.login(email, password);
     console.log(user)
 
