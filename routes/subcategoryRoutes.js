@@ -7,7 +7,7 @@ const router = Router();
 
 
 router.get(constants.subcategories, controller.getAllSubCategories);
-router.get(constants.subcategories+constants.ID, controller.getSingleSubcategory);
+router.get(constants.subcategories + constants.ID, controller.getSingleSubcategory);
 
 
 //Temporary Route . Delete After Creating the Subcategory

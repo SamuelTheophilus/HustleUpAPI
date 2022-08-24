@@ -252,7 +252,6 @@ const forgotPassword = async (req, res) => {
   }
 }
 
-
 const passwordform = (req, res) => {
   res.render('resetpassword', { title: 'Reset Your Passowrd' })
 
