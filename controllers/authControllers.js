@@ -102,7 +102,7 @@ const employeesignup = async (req, res) => {
     const verificationToken = user.generateVerificationToken();
 
     //creating the url for the user
-    const url = `http://localhost:8000/verify/${verificationToken}`;
+    const url = `https://hustleup-api.herokuapp.com/verify/${verificationToken}`;
 
     let options = {
       from: `"Verify Your Email", <${process.env.EMAIL_USERNAME}>`,
@@ -145,7 +145,7 @@ const genUserSignup = async (req, res) => {
     const verificationToken = user.generateVerificationToken();
 
     //creating the url for the user
-    const url = `http://localhost:8000/verify/${verificationToken}`;
+    const url = `https://hustleup-api.herokuapp.com/verify/${verificationToken}`;
 
     let options = {
       from: `"Verify Your Email", <${process.env.EMAIL_USERNAME}>`,
@@ -225,7 +225,7 @@ const forgotPassword = async (req, res) => {
     const user = await generalUsers.findOne({ email: email })
 
     const resetPasswordToken = user.generateVerificationToken();
-    const url = `http://localhost:8000/verify/password/${resetPasswordToken}`
+    const url = `https://hustleup-api.herokuapp.com/verify/password/${resetPasswordToken}`
 
     let options = {
       from: `"Verify Your Email", <${process.env.EMAIL_USERNAME}>`,
