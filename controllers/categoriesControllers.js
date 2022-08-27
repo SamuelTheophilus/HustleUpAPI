@@ -27,7 +27,7 @@ const getSingleCategory = async (req, res) => {
   try {
     const id = req.query.id;
     const employee = await generalUser.find({categoryId: id});
-    res.status(200).json({ employee: employee });
+    res.status(200).send( employee );
 
   } catch (error) {
     res.status(500).send({ err: error.message });
