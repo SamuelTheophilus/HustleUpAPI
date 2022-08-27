@@ -6,8 +6,9 @@ const categoriesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subcategory: {
+  employees: {
     type: Array,
+    required: false
   },
 });
 

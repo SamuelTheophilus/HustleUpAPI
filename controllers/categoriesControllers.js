@@ -1,12 +1,12 @@
 const Categories = require('../models/categoriesModel');
-
+const generalUser = require('../models/generalUserModel');
 
 
 //get all categories.
 const getAllCategories = (req, res) => {
   Categories.find()
     .then((result) => {
-      res.json({ result });
+      res.send( result );
     })
     .catch(err => { console.log(err); });
 };
@@ -16,12 +16,22 @@ const getAllCategories = (req, res) => {
 const getSingleCategory = async (req, res) => {
 
 
-  try{
+  // try{
+  //   const id = req.query.id;
+  //   const category = await Categories.findById(id);
+  //   res.status(200).json({ category });
+  // } catch (err) {
+  //   res.status(500).json({ err });
+  // }
+
+  try {
     const id = req.query.id;
-    const category = await Categories.findById(id);
-    res.status(200).json({ category });
-  } catch (err) {
-    res.status(500).json({ err });
+    const employee = await generalUser.find({categoryId: id});
+    res.status(200).json({ employee: employee });
+
+  } catch (error) {
+    res.status(500).send({ err: error.message });
+
   }
   
 
@@ -32,9 +42,9 @@ const getSingleCategory = async (req, res) => {
 const addSingleCategory = async (req, res) => {
 
   try {
-    const { name, subcategory } = req.body;
+    const { name, employee } = req.body;
 
-    const category = await Categories.create({ name, subcategory });
+    const category = await Categories.create({ name, employee });
     res.status(200).json(category);
   }
   catch (err) {

@@ -31,7 +31,7 @@ const generalUsersSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  subcategoryId: {
+  categoryId: {
     type: Array,
     required: false
   },

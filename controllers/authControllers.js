@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const generalUsers = require('../models/generalUserModel');
 const subcategories = require('../models/subCategoriesModel');
+const categories = require('../models/categoriesModel')
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const cookie = require('cookie-parser');
@@ -77,7 +78,7 @@ const login_post = async (req, res) => {
 
     const token = createWebToken(user._id)
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-    res.status(200).json({ user: user._id })
+    res.status(200).json({ user: user })
 
 
   } catch (error) {
@@ -90,13 +91,13 @@ const login_post = async (req, res) => {
 }
 
 const employeesignup = async (req, res) => {
-  const { name, email, password, reference, phoneNumber, subcategory } = req.body;
+  const { name, email, password, reference, phoneNumber, category } = req.body;
 
-  const subcategoryObj = await subcategories.findOne({ name: `${subcategory}` });
+  const categoryObj = await categories.findOne({ name: `${category}` });
 
   try {
     // creating the employee user
-    const user = await generalUsers.create({ name, email, password, reference, phoneNumber, subcategoryId: subcategoryObj._id.toString() });
+    const user = await generalUsers.create({ name, email, password, reference, phoneNumber, categoryId: categoryObj._id.toString() });
 
     //generating the verificaation Token
     const verificationToken = user.generateVerificationToken();
@@ -123,8 +124,8 @@ const employeesignup = async (req, res) => {
     res.status(201).json({ message: `Sent a verification email to ${user.email}` });
 
     // token for the sign up
-    const token = await createWebToken(user._id)
-    res.cookie('signupjwt', token, { expiresIn: maxAge * 1000, httpOnly: true })
+    // const token = await createWebToken(user._id)
+    // res.cookie('signupjwt', token, { expiresIn: maxAge * 1000, httpOnly: true })
 
 
 
