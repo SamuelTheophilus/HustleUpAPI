@@ -72,7 +72,7 @@ const employeeReview = async (req, res) => {
   const review = req.body;
   const id = req.query.id;
 
-  await generalUser.updateOne({_id: id}, { $push: { reviews: review } })
+  await generalUser.updateOne({ _id: id }, { $push: { reviews: review } })
     .then((result) => {
       res.status(200).json({ message: 'Review was added was updated successfully' })
     })
@@ -81,21 +81,65 @@ const employeeReview = async (req, res) => {
 
 
 
-const employeeAddSubcategories = async(req, res)=>{
+const employeeAddSubcategories = async (req, res) => {
 
-  const {subcategoryname }= req.body;
+  const { subcategoryname } = req.body;
   const id = req.query.id;
 
-  const sub = await subcategories.findOne({name: subcategoryname});
+  const sub = await subcategories.findOne({ name: subcategoryname });
 
-  if(sub){
-    await generalUser.updateOne({_id: id }, {$push: {subcategoryId: sub._id.toString()}})
-    .then((result)=> { res.status(200).json({message: 'New Subcategory Was Added successfully'})})
-    .catch((err) => { res.status(500).json({message: err})})
+  if (sub) {
+    await generalUser.updateOne({ _id: id }, { $push: { subcategoryId: sub._id.toString() } })
+      .then((result) => { res.status(200).json({ message: 'New Subcategory Was Added successfully' }) })
+      .catch((err) => { res.status(500).json({ message: err }) })
   }
 }
 
 
+// New Controllers
+
+async function  employeeUpdateBio (req, res)  {
+
+  const { bio } = req.body;
+  const id = req.query.id;
+
+  const user = await generalUser.findByIdAndUpdate(id, { bio: bio }, { useFindAndModify: true });
+  if (user) {
+    return res.status(200).json({ message: 'Bio Added' })
+  }
+}
+
+const employeeUpdateSkills = async (req, res) => {
+
+  const { skills } = req.body;
+  const id = req.query.id;
+
+  const user = await generalUser.findByIdAndUpdate(id, { skills: skills }, { useFindAndModify: true });
+  if (user) {
+    return res.status(200).json({ message: 'Skils Added' })
+  }
+}
+
+const userAddRating = async (req, res)=>{
+  const {rating }=  req.body;
+  const id = req.query.id;
+
+  let user = await generalUser.findById(id)
+  if (user.rating){
+    let new_rating = Math.round((rating + user.rating) / 2)
+    
+    user = await generalUser.findOneAndUpdate({id},{rating: new_rating})
+    return res.status(200).json({message: 'Successfully added rating'})
+
+  } else if (!user.rating){
+    let new_rating = rating
+    user = await generalUser.findOneAndUpdate({id},{rating: new_rating})
+    return res.status(200).json({message: 'Successfully added rating'})
+  }
+  
+
+
+}
 
 
 
@@ -107,5 +151,8 @@ module.exports = {
   getSingleUser,
   updateEmployee,
   employeeReview,
-  employeeAddSubcategories
+  employeeAddSubcategories,
+  employeeUpdateBio,
+  employeeUpdateSkills,
+  userAddRating
 }

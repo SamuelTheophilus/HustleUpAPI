@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const requestSchema = new mongoose.Schema({
   subcategoryid: {
     type: String,
-    required: true,
+    required: false,
   },
   description: {
     type: String,

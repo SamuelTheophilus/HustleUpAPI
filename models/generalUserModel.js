@@ -35,6 +35,10 @@ const generalUsersSchema = new mongoose.Schema({
     type: Array,
     required: false
   },
+  bio: {
+    type: String,
+    required: false
+  },
   reviews: {
     type: Array,
     required: false
@@ -43,6 +47,14 @@ const generalUsersSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  rating: {
+    type: Number,
+    required: false
+  },
+  skills:{
+    type: String,
+    required: false
   }
 });
 

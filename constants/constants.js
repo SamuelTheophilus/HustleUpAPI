@@ -15,6 +15,9 @@ const constants = {
   review: '/review',
   password: '/password',
   resetpassword: '/resetpassword',
+  bio: '/bio',
+  skills:'/skills',
+  rating:'/rating'
 }
 
 

@@ -78,7 +78,7 @@ const login_post = async (req, res) => {
 
     const token = createWebToken(user._id)
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-    res.status(200).json({ user: user })
+    res.status(200).json({ user: user, token: token })
 
 
   } catch (error) {
