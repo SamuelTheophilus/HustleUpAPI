@@ -41,14 +41,22 @@ function employeeIdList(obj){
 const postRequest = async (req, res) => {
   const { subcategoryName, description, location, completed } = req.body;
   const token = req.cookies.jwt;
+  console.log(req.headers)
+  const header_token = req.headers['jwt']
 
-  const username = await returnUser(token)
-  let subcategoryid = await returnSubcategoryId (subcategoryName)
 
+  if(token){
+    const username = await returnUser(token)
+    let subcategoryid = await returnSubcategoryId (subcategoryName)
+    let employeeList = await generalUser.find({subcategoryId: subcategoryid})
+    employeeList = employeeIdList(employeeList)
+  } else if (header_token){
+    const username = await returnUser(token)
+    let subcategoryid = await returnSubcategoryId (subcategoryName)
+    let employeeList = await generalUser.find({subcategoryId: subcategoryid})
+    employeeList = employeeIdList(employeeList)
 
-  let employeeList = await generalUser.find({subcategoryId: subcategoryid})
-  employeeList = employeeIdList(employeeList)
-
+  }
 
   try {
     const request = await Request.create({ subcategoryid, description, username, location, completed });
