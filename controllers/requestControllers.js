@@ -2,6 +2,7 @@ const Request = require('../models/requestModel');
 const Notification = require('../models/notificationModel');
 const generalUser = require('../models/generalUserModel');
 const Subcategory = require('../models/subCategoriesModel');
+const Category = require('../models/categoriesModel')
 const jwt = require('jsonwebtoken');
 
 
@@ -16,8 +17,8 @@ async function  returnUser (token) {
 
 }
 
-async function returnSubcategoryId (name) {
-  const subcategory = await Subcategory.findOne({name: name})
+async function returnCategoryId (name) {
+  const subcategory = await Category.findOne({name: name})
   return subcategory._id.toString()
 }
 
@@ -44,22 +45,26 @@ const postRequest = async (req, res) => {
   console.log(req.headers)
   const header_token = req.headers['jwt']
 
+  let username = ''
+  let categoryid = ''
+  let employeeList = []
+
 
   if(token){
-    const username = await returnUser(token)
-    let subcategoryid = await returnSubcategoryId (subcategoryName)
-    let employeeList = await generalUser.find({subcategoryId: subcategoryid})
+    username = await returnUser(token)
+    categoryid = await returnCategoryId (subcategoryName)
+    employeeList = await generalUser.find({categoryId: categoryid})
     employeeList = employeeIdList(employeeList)
   } else if (header_token){
-    const username = await returnUser(token)
-    let subcategoryid = await returnSubcategoryId (subcategoryName)
-    let employeeList = await generalUser.find({subcategoryId: subcategoryid})
+    username = await returnUser(token)
+    categoryid = await returnCategoryId (subcategoryName)
+    employeeList = await generalUser.find({categoryId: categoryid})
     employeeList = employeeIdList(employeeList)
 
   }
 
   try {
-    const request = await Request.create({ subcategoryid, description, username, location, completed });
+    const request = await Request.create({ categoryid, description, username, location, completed });
     const notification = await Notification.create({ description, username, location, matchedEmployees: employeeList });
     res.status(200).json({ request, notification });
   }
