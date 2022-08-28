@@ -43,7 +43,7 @@ const postRequest = async (req, res) => {
   const { subcategoryName, description, location, completed } = req.body;
   const token = req.cookies.jwt;
   console.log(req.headers)
-  const header_token = req.headers['jwt']
+  const header_token = req.headers.jwt
 
   let username = ''
   let categoryid = ''
