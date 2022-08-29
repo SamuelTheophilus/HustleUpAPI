@@ -39,7 +39,7 @@ const addsubcategory = async (req, res) => {
 
   const newsub = await Subcategories.create({name: name});
   if (newsub){
-    res.send('Sub created')
+    res.json({message:'Sub created'})
   }
 
 }

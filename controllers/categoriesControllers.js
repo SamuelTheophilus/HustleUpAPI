@@ -6,7 +6,7 @@ const generalUser = require('../models/generalUserModel');
 const getAllCategories = (req, res) => {
   Categories.find()
     .then((result) => {
-      res.send( result );
+      res.send(result);
     })
     .catch(err => { console.log(err); });
 };
@@ -26,8 +26,8 @@ const getSingleCategory = async (req, res) => {
 
   try {
     const id = req.query.id;
-    const employee = await generalUser.find({categoryId: id});
-    res.status(200).send( employee );
+    const employee = await generalUser.find({ categoryId: id });
+    res.status(200).send(employee);
 
   } catch (error) {
     res.status(500).send({ err: error.message });
@@ -46,8 +46,33 @@ const addSingleCategory = async (req, res) => {
   }
   catch (err) {
     console.log(err);
-    res.json({err });
+    res.json({ err: err });
   }
+}
+
+const deleteSingleCategory = async (req, res) => {
+  const { name } = req.body;
+
+  if (name){
+
+    const category = await Categories.findOne({name: name})
+    let id = category._id.toString();
+    
+    try {
+      const result = await Categories.findByIdAndDelete(category._id.toString())
+      if(result){
+        return res.status(200).json({message:'Category deleted successfully'})
+      }else{
+        return res.status(400).json({message:'Category not found'})
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message })
+    }
+  } else{
+    return res.status(400).json({ message: 'No Name Found'})
+
+  }
+    
 }
 
 
@@ -56,5 +81,6 @@ module.exports = {
   getAllCategories,
   getSingleCategory,
   addSingleCategory,
+  deleteSingleCategory,
 }
 

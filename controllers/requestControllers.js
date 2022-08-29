@@ -55,8 +55,10 @@ const postRequest = async (req, res) => {
     categoryid = await returnCategoryId (subcategoryName)
     employeeList = await generalUser.find({categoryId: categoryid})
     employeeList = employeeIdList(employeeList)
-  } else if (header_token){
-    username = await returnUser(token)
+  } 
+  
+  if(header_token){
+    username = await returnUser(header_token)
     categoryid = await returnCategoryId (subcategoryName)
     employeeList = await generalUser.find({categoryId: categoryid})
     employeeList = employeeIdList(employeeList)

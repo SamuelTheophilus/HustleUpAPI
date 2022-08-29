@@ -20,11 +20,11 @@ const getAllNotfications = async (req, res) => {
 
 const postNotfications = async (req, res) => {
 
-  const { description, employerId, location } = req.body;
+  const { description, username, location } = req.body;
 
   try {
-    const notification = await Notification.create({ description, employerId, location });
-    res.status(200).json(notification);
+    const notification = await Notification.create({ description, username, location });
+    res.status(200).json({notification: notification});
   } catch (error) {
     console.log(error);
     res.status(404).json({ message: error.message });
