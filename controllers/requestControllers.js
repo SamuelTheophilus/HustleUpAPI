@@ -78,6 +78,7 @@ const postRequest = async (req, res) => {
 //Making a Service Request together with a notification request to One employee
 const postRequestEmployee = async (req, res)=>{
   const { employeeId, description, location, completed } = req.body;
+  console.log(req.headers)
   const header_token = req.headers.jwt
 
   let username = ''
