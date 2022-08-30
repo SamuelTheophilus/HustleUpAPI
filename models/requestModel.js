@@ -7,7 +7,7 @@ const requestSchema = new mongoose.Schema({
   },
   employeeId: {
     type: String,
-    required: false,
+    required: true,
   },
   description: {
     type: String,

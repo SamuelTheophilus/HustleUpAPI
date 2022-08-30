@@ -8,6 +8,14 @@ const paymentSchema = new mongoose.Schema({
   amount:{
     type: Number,
     required: true
+  },
+  userId: {
+    type: String,
+    required: true
+  },
+  employerId:{
+    type: String,
+    required: true
   }
 
 })
