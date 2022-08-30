@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-  categoryid: {
+  employeeId: {
     type: String,
     required: false,
   },
@@ -11,7 +11,7 @@ const requestSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
+    required: false,
   },
   username: {
     type: String,

@@ -17,7 +17,8 @@ const constants = {
   resetpassword: '/resetpassword',
   bio: '/bio',
   skills:'/skills',
-  rating:'/rating'
+  rating:'/rating',
+  success:'/success'
 }
 
 

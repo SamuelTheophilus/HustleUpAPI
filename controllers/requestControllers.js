@@ -75,6 +75,29 @@ const postRequest = async (req, res) => {
   }
 }
 
+//Making a Service Request together with a notification request to One employee
+const postRequestEmployee = async (req, res)=>{
+  const { employeeId, description, location, completed } = req.body;
+  const header_token = req.headers.jwt
+
+  let username = ''
+  let categoryid = ''
+  let employeeList = []
+
+  employeeList.push(employeeId);
+
+  username = await returnUser(header_token)
+
+  try {
+    const request = await Request.create({ employeeId, description, username, location, completed });
+    const notification = await Notification.create({ description, username, location, matchedEmployees: employeeList });
+    res.status(200).json({ request, notification });
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+}
 
 
 //Updating a request
@@ -101,4 +124,5 @@ module.exports = {
   postRequest,
   updateRequest,
   deleteRequest,
+  postRequestEmployee
 };

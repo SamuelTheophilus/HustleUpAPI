@@ -1,10 +1,18 @@
 const router = require('express').Router();
-const {constants} = require('../constants/constants')
+const constants = require('../constants/constants')
 
 
-router.get(constants.payments, (req, res)=>{
-  res.send('This is the payment section')
+// Sending the money
+router.post(constants.payments, ()=>{
+
 })
 
+//Getting the Money
+router.get(constants.payments, ()=>{
 
-module.exports =  router;
+})
+
+//Route after a successful transaction
+router.get(constants.success, ()=>{
+
+})
