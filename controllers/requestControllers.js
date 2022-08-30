@@ -77,7 +77,7 @@ const postRequest = async (req, res) => {
 
 //Making a Service Request together with a notification request to One employee
 const postRequestEmployee = async (req, res)=>{
-  const { employeeId, description, location, completed } = req.body;
+  const { userId, employeeId, description, location, completed } = req.body;
   console.log(req.headers)
   const header_token = req.headers.jwt
 
@@ -89,7 +89,7 @@ const postRequestEmployee = async (req, res)=>{
   username = await returnUser(header_token)
 
   try {
-    const request = await Request.create({ employeeId, description, username, location, completed });
+    const request = await Request.create({ userId, employeeId, description, username, location, completed });
     const notification = await Notification.create({ description, username, location, matchedEmployees: employeeList });
     res.status(200).json({ request, notification });
   }
@@ -119,10 +119,26 @@ const deleteRequest = (req, res) => {
     .catch((err) => { res.status(500).json(err) });
 };
 
+const userOrders = async (req, res) => {
+  let id = req.query.id;
+
+  try{
+    let orders = await Request.findById(id)
+    if (orders){
+      return res.status(200).send(orders)
+    }
+
+  }catch(err){
+    console.log(err)
+  }
+
+}
+
 
 module.exports = {
   postRequest,
   updateRequest,
   deleteRequest,
-  postRequestEmployee
+  postRequestEmployee,
+  userOrders
 };
