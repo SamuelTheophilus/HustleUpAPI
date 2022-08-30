@@ -82,7 +82,6 @@ const postRequestEmployee = async (req, res)=>{
   const header_token = req.headers.jwt
 
   let username = ''
-  let categoryid = ''
   let employeeList = []
 
   employeeList.push(employeeId);
