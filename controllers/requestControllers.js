@@ -126,7 +126,7 @@ const userOrders = async (req, res) => {
     let orders = await Request.findOne({userId:id})
     let employee = await generalUser.findById(orders.employeeId);
 
-    let finalOrder = 
+    // let finalOrder = 
 
     console.log(orders, employee)
     if (orders){
