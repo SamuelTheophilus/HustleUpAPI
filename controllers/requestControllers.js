@@ -125,12 +125,17 @@ const userOrders = async (req, res) => {
   try{
     let orders = await Request.findOne({userId:id})
     let employee = await generalUser.findById(orders.employeeId);
+    // console.log(employee.price)
 
-    // let finalOrder = 
-
-    console.log(orders, employee)
+    let finalOrder = {
+      description: orders.description,
+      employeeName: employee.name,
+      status: orders.completed,
+      skills: employee.skills,
+      price: employee.price,
+    }
     if (orders){
-      return res.status(200).json({orders, employee})
+      return res.status(200).json(finalOrder)
     }
 
   }catch(err){
