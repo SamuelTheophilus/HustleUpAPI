@@ -13,7 +13,7 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  employerId:{
+  employeeId:{
     type: String,
     required: true
   }

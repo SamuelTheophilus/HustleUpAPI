@@ -77,7 +77,6 @@ const postRequest = async (req, res) => {
 
 //Making a Service Request together with a notification request to One employee
 const postRequestEmployee = async (req, res)=>{
-  console.log(req.body);
   const { userId, employeeId, description, location, completed } = req.body;
   // console.log(req.headers)
   const header_token = req.headers.jwt
@@ -124,9 +123,14 @@ const userOrders = async (req, res) => {
   let id = req.query.id;
 
   try{
-    let orders = await Request.findById(id)
+    let orders = await Request.findOne({userId:id})
+    let employee = await generalUser.findById(orders.employeeId);
+
+    let finalOrder = 
+
+    console.log(orders, employee)
     if (orders){
-      return res.status(200).send(orders)
+      return res.status(200).json({orders, employee})
     }
 
   }catch(err){
