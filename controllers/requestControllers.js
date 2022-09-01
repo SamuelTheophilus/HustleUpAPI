@@ -6,6 +6,9 @@ const Category = require('../models/categoriesModel')
 const jwt = require('jsonwebtoken');
 
 
+/*
+Custom Function
+ */
 
 async function returnUser(token) {
 
@@ -22,6 +25,29 @@ async function returnCategoryId(name) {
   return subcategory._id.toString()
 }
 
+async function ordersList(name) {
+  let finalArray = [];
+  let finalOrder = {}
+
+  for (let i = 0; i < name.length; i++) {
+    let employee = await generalUser.findById(name[i].employeeId)
+
+    finalOrder = {
+      description: name[i].description,
+      employeeName: employee.name,
+      status: name[i].completed,
+      skills: employee.skills,
+      // price: employee.price,
+    }
+
+    finalArray.push(finalOrder);
+    
+  }
+
+  console.log(finalArray)
+  return finalArray;
+}
+
 
 //builds the list of the employee IDs
 function employeeIdList(obj) {
@@ -36,6 +62,12 @@ function employeeIdList(obj) {
 
 }
 
+
+
+
+/**
+ * Controllers
+*/
 
 
 // Making a Service Request together with a notification request.
@@ -120,28 +152,6 @@ const deleteRequest = (req, res) => {
 };
 
 
-async function ordersList(name) {
-  let finalArray = [];
-  let finalOrder = {}
-
-  for (let i = 0; i < name.length; i++) {
-    let employee = await generalUser.findById(name[i].employeeId)
-
-    finalOrder = {
-      description: name[i].description,
-      employeeName: employee.name,
-      status: name[i].completed,
-      skills: employee.skills,
-      // price: employee.price,
-    }
-
-    finalArray.push(finalOrder);
-    
-  }
-
-  console.log(finalArray)
-  return finalArray;
-}
 
 
 const userOrders = async (req, res) => {
