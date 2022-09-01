@@ -44,7 +44,6 @@ async function ordersList(name) {
     
   }
 
-  console.log(finalArray)
   return finalArray;
 }
 
