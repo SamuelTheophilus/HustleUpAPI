@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 
 
 
-async function  returnUser (token) {
-  
+async function returnUser(token) {
+
   const decodedToken = jwt.verify(token, 'HUSTLEUPAISECRET')
   const employerId = decodedToken.id;
   const user = await generalUser.findById(`${employerId}`)
@@ -17,14 +17,14 @@ async function  returnUser (token) {
 
 }
 
-async function returnCategoryId (name) {
-  const subcategory = await Category.findOne({name: name})
+async function returnCategoryId(name) {
+  const subcategory = await Category.findOne({ name: name })
   return subcategory._id.toString()
 }
 
 
 //builds the list of the employee IDs
-function employeeIdList(obj){
+function employeeIdList(obj) {
   let singleId = ''
   let finalArray = []
   obj.forEach(element => {
@@ -50,17 +50,17 @@ const postRequest = async (req, res) => {
   let employeeList = []
 
 
-  if(token){
+  if (token) {
     username = await returnUser(token)
-    categoryid = await returnCategoryId (subcategoryName)
-    employeeList = await generalUser.find({categoryId: categoryid})
+    categoryid = await returnCategoryId(subcategoryName)
+    employeeList = await generalUser.find({ categoryId: categoryid })
     employeeList = employeeIdList(employeeList)
-  } 
-  
-  if(header_token){
+  }
+
+  if (header_token) {
     username = await returnUser(header_token)
-    categoryid = await returnCategoryId (subcategoryName)
-    employeeList = await generalUser.find({categoryId: categoryid})
+    categoryid = await returnCategoryId(subcategoryName)
+    employeeList = await generalUser.find({ categoryId: categoryid })
     employeeList = employeeIdList(employeeList)
 
   }
@@ -76,7 +76,7 @@ const postRequest = async (req, res) => {
 }
 
 //Making a Service Request together with a notification request to One employee
-const postRequestEmployee = async (req, res)=>{
+const postRequestEmployee = async (req, res) => {
   const { userId, employeeId, description, location, completed } = req.body;
   // console.log(req.headers)
   const header_token = req.headers.jwt
@@ -119,26 +119,42 @@ const deleteRequest = (req, res) => {
     .catch((err) => { res.status(500).json(err) });
 };
 
+
+async function ordersList(name) {
+  let finalArray = [];
+  let finalOrder = {}
+
+  for (let i = 0; i < name.length; i++) {
+    let employee = await generalUser.findById(name[i].employeeId)
+
+    finalOrder = {
+      description: name[i].description,
+      employeeName: employee.name,
+      status: name[i].completed,
+      skills: employee.skills,
+      // price: employee.price,
+    }
+
+    finalArray.push(finalOrder);
+    
+  }
+
+  console.log(finalArray)
+  return finalArray;
+}
+
+
 const userOrders = async (req, res) => {
   let id = req.query.id;
 
-  try{
-    let orders = await Request.findOne({userId:id})
-    let employee = await generalUser.findById(orders.employeeId);
-    // console.log(employee.price)
-
-    let finalOrder = {
-      description: orders.description,
-      employeeName: employee.name,
-      status: orders.completed,
-      skills: employee.skills,
-      price: employee.price,
-    }
-    if (orders){
-      return res.status(200).json(finalOrder)
+  try {
+    let orders = await Request.find({ userId: id })
+    const list = await ordersList(orders)
+    if (orders) {
+      return res.status(200).send(list)
     }
 
-  }catch(err){
+  } catch (err) {
     console.log(err)
   }
 
