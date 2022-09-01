@@ -10,7 +10,11 @@ const userPayment = async (req, res) => {
 
   amount = parseFloat(amount)
 
+  
+
   let paymentRecord = await Payments.create({ description, amount, userId, employeeId })
+  let data = {}
+  let paylinkUrl = ''
   if (paymentRecord) {
     try {
       async function run() {
@@ -33,12 +37,13 @@ const userPayment = async (req, res) => {
           }
         );
 
-        const data = await resp.json();
-        console.log(data);
+        data = await resp.json();
+        paylinkUrl = data.data.paylinkUrl;
+        return paylinkUrl
       }
 
-      run();
-      res.status(200).send('Working as intended')
+      let finalLink = await run();
+      res.status(200).send(finalLink)
     } catch (err) {
       console.log(err)
       res.status(500).send('Something went wrong')
