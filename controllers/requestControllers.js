@@ -2,7 +2,8 @@ const Request = require('../models/requestModel');
 const Notification = require('../models/notificationModel');
 const generalUser = require('../models/generalUserModel');
 const Subcategory = require('../models/subCategoriesModel');
-const Category = require('../models/categoriesModel')
+const Category = require('../models/categoriesModel');
+const Order = require('../models/ordersModel');
 const jwt = require('jsonwebtoken');
 
 
@@ -27,21 +28,26 @@ async function returnCategoryId(name) {
 
 async function ordersList(name) {
   let finalArray = [];
-  let finalOrder = {}
+
 
   for (let i = 0; i < name.length; i++) {
     let employee = await generalUser.findById(name[i].employeeId)
+    let employeeName = employee.name;
+    let status = name[i].completed;
+    let employeeSkill = employee.skills;
+    let description = name[i].description
+    let senderName = name[i].username
+    let location = name[i].location;
+    let userStatus = 'N'
+    let price = employee.price
 
-    finalOrder = {
-      description: name[i].description,
-      employeeName: employee.name,
-      status: name[i].completed,
-      skills: employee.skills,
-      // price: employee.price,
+
+    const orders = await Order.create({ price, employeeName, status, employeeSkill, description, senderName, location, userStatus })
+    if (orders) {
+      finalArray.push(orders);
     }
 
-    finalArray.push(finalOrder);
-    
+
   }
 
   return finalArray;
@@ -63,43 +69,49 @@ function employeeIdList(obj) {
 
 
 
-
 /**
  * Controllers
 */
 
-
 // Making a Service Request together with a notification request.
 const postRequest = async (req, res) => {
-  const { subcategoryName, description, location, completed } = req.body;
-  const token = req.cookies.jwt;
+  const { userId, employeeId, description, location, completed } = req.body;
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMDYzNjMzZjRhNDhiMTA1MTQ5NjAzZiIsImlhdCI6MTY2MjMyMDkxMiwiZXhwIjoxNjYyNTgwMTEyfQ.PdNnpSE9zxHAPwyAc-SggMPeDClY7RamSk1wd_gdyuI";
+  console.log(token)
   console.log(req.headers)
   const header_token = req.headers.jwt
 
   let username = ''
-  let categoryid = ''
   let employeeList = []
 
 
   if (token) {
     username = await returnUser(token)
-    categoryid = await returnCategoryId(subcategoryName)
-    employeeList = await generalUser.find({ categoryId: categoryid })
-    employeeList = employeeIdList(employeeList)
-  }
 
-  if (header_token) {
-    username = await returnUser(header_token)
-    categoryid = await returnCategoryId(subcategoryName)
-    employeeList = await generalUser.find({ categoryId: categoryid })
-    employeeList = employeeIdList(employeeList)
+    employeeList.push(employeeId);
 
   }
+
+  // if (header_token) {
+  //   username = await returnUser(header_token)
+
+  //   employeeList.push(employeeId);
+
+
+  // }
 
   try {
-    const request = await Request.create({ categoryid, description, username, location, completed });
+    const request = await Request.create({ userId, employeeId, description, username, location, completed });
+    let tempArray = []
+    tempArray.push(request)
+    console.log(tempArray)
+    let finalArray = await ordersList(tempArray);
+    tempArray = [];
+    console.log(tempArray)
     const notification = await Notification.create({ description, username, location, matchedEmployees: employeeList });
-    res.status(200).json({ request, notification });
+    if (finalArray) {
+      res.status(200).json({ request, notification });
+    }
   }
   catch (err) {
     console.log(err);
@@ -109,7 +121,6 @@ const postRequest = async (req, res) => {
 //Making a Service Request together with a notification request to One employee
 const postRequestEmployee = async (req, res) => {
   const { userId, employeeId, description, location, completed } = req.body;
-  // console.log(req.headers)
   const header_token = req.headers.jwt
 
   let username = ''
@@ -120,9 +131,17 @@ const postRequestEmployee = async (req, res) => {
   username = await returnUser(header_token)
 
   try {
+    let tempArray = [];
     const request = await Request.create({ userId, employeeId, description, username, location, completed });
+    tempArray.push(request)
+    let finalArray = await ordersList(tempArray);
+    tempArray = [];
     const notification = await Notification.create({ description, username, location, matchedEmployees: employeeList });
-    res.status(200).json({ request, notification });
+
+
+    if (finalArray) {
+      res.status(200).json({ request, notification });
+    }
   }
   catch (err) {
     console.log(err);
@@ -151,16 +170,14 @@ const deleteRequest = (req, res) => {
 };
 
 
-
-
 const userOrders = async (req, res) => {
   let id = req.query.id;
 
   try {
-    let orders = await Request.find({ userId: id })
-    const list = await ordersList(orders)
-    if (orders) {
-      return res.status(200).send(list)
+    let sender = await generalUser.findById(id)
+    let userOrders = await Order.find({ senderName: sender.name })
+    if (userOrders) {
+      return res.status(200).send(userOrders)
     }
 
   } catch (err) {
@@ -169,11 +186,32 @@ const userOrders = async (req, res) => {
 
 }
 
+//get employee orders
+const employeeOrders = async (req, res) => {
+  let id = req.query.id;
+
+  const orders = await generalUser.findById(id)
+  let employeeName = orders.name;
+
+  if (employeeName) {
+    try {
+      const employeeOrders = await Order.find({ employeeName: employeeName })
+      res.status(200).send(employeeOrders)
+
+    } catch (err) {
+      res.status(500).send('Something went wrong')
+    }
+  }
+}
+
+
+
 
 module.exports = {
   postRequest,
   updateRequest,
   deleteRequest,
   postRequestEmployee,
-  userOrders
+  userOrders,
+  employeeOrders
 };

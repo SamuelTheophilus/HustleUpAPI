@@ -18,7 +18,10 @@ const constants = {
   bio: '/bio',
   skills:'/skills',
   rating:'/rating',
-  success:'/success'
+  success:'/success',
+  accept: '/accept',
+  decline: '/decline',
+  completed: '/completed'
 }
 
 
