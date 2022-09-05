@@ -38,7 +38,7 @@ async function ordersList(name) {
     let description = name[i].description
     let senderName = name[i].username
     let location = name[i].location;
-    let userStatus = 'N'
+    let userStatus = false
     let price = employee.price
 
 

@@ -30,8 +30,8 @@ const ordersModelSchema = new mongoose.Schema({
     required: false,
   },
   userStatus:{
-    type: String,
-    required: false
+    type: Boolean,
+    required: true
   }
 });
 

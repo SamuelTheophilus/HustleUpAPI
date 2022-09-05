@@ -11,13 +11,13 @@ const employeeAccepted = async (req, res) => {
   const { orderId } = req.body
   let user = await GeneralUser.findById(id)
 
-  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'A' })
-  try{
-    if(results){
-      return res.status(200).json({message: 'Order Accepted', results})
+  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'A' }, { new: true })
+  try {
+    if (results) {
+      return res.status(200).json({ message: 'Order Accepted', results })
     }
-  }catch(error){
-    res.status(500).json({message: "Order Not Accepted"})
+  } catch (error) {
+    res.status(500).json({ message: "Order Not Accepted" })
 
   }
 
@@ -29,13 +29,13 @@ const employeeDeclined = async (req, res) => {
   let user = await GeneralUser.findById(id)
 
 
-  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'D' })
-  try{
-    if(results){
-      return res.status(200).json({message: 'Order Declined', results})
+  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'D' }, { new: true })
+  try {
+    if (results) {
+      return res.status(200).json({ message: 'Order Declined', results })
     }
-  }catch(error){
-    res.status(500).json({message: "Order Not Declined"})
+  } catch (error) {
+    res.status(500).json({ message: "Order Not Declined" })
 
   }
 }
@@ -45,13 +45,13 @@ const employeeCompleted = async (req, res) => {
   const { orderId } = req.body
   let user = await GeneralUser.findById(id)
 
-  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'C' })
-  try{
-    if(results){
-      return res.status(200).json({message: 'Order Completed' ,results})
+  let results = await Order.findOneAndUpdate({ _id: orderId, employeeName: user.name }, { status: 'C' }, { new: true })
+  try {
+    if (results) {
+      return res.status(200).json({ message: 'Order Completed', results })
     }
-  }catch(error){
-    res.status(500).json({message: "Order Not Completed"})
+  } catch (error) {
+    res.status(500).json({ message: "Order Not Completed" })
 
   }
 }
@@ -61,20 +61,35 @@ const userAgreement = async (req, res) => {
   const { orderId } = req.body
   let user = await GeneralUser.findById(id)
 
-  let results = await Order.findOneAndUpdate({ _id: orderId, senderName: user.name }, { userStatus: 'C' })
-  try{
-    if(results){
-      return res.status(200).json({message: 'Order Completed', results})
+  let results = await Order.findOneAndUpdate({ _id: orderId, senderName: user.name }, { userStatus: true }, { new: true })
+  try {
+    if (results) {
+      return res.status(200).json({ message: 'Order Completed', results })
     }
-  }catch(error){
-    res.status(500).json({message: "Order Not Completed"})
+  } catch (error) {
+    res.status(500).json({ message: "Order Not Completed" })
 
   }
 }
+
+// const falseSetting = async (req, res)=>{
+//   let id = req.query.id;
+//   let user = await GeneralUser.findById(id)
+
+//   let results = await Order.updateMany({ senderName: user.name }, {userStatus: false})
+//   if(results){
+//     return res.status(200).json({ message: 'updated successfully'})
+//   } else{
+//     return res.status(500).json({ message: 'failed'})
+//   }
+
+
+// }
 
 module.exports = {
   employeeAccepted,
   employeeDeclined,
   employeeCompleted,
   userAgreement,
+  // falseSetting,
 }
