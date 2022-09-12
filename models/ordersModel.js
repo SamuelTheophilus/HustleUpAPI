@@ -32,6 +32,14 @@ const ordersModelSchema = new mongoose.Schema({
   userStatus:{
     type: Boolean,
     required: true
+  },
+  senderPhoneNumber: {
+    type: Number,
+    required: false
+  },
+  employeePhoneNumber: {
+    type: Number,
+    required: false
   }
 });
 

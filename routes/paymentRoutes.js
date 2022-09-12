@@ -6,14 +6,8 @@ const controller = require('../controllers/paymentControllers')
 // Sending the money
 router.post(constants.payments, controller.userPayment)
 
-// //Getting the Money
-// router.get(constants.payments, ()=>{
+//Getting the Money
+router.post(constants.payments + constants.employee, controller.employeePaymentController)
 
-// })
-
-// //Route after a successful transaction
-// router.get(constants.success, ()=>{
-
-// })
 
 module.exports = router;

@@ -72,19 +72,19 @@ const userAgreement = async (req, res) => {
   }
 }
 
-// const falseSetting = async (req, res)=>{
-//   let id = req.query.id;
-//   let user = await GeneralUser.findById(id)
+const falseSetting = async (req, res)=>{
+  let id = req.query.id;
+  let user = await GeneralUser.findById(id)
 
-//   let results = await Order.updateMany({ senderName: user.name }, {userStatus: false})
-//   if(results){
-//     return res.status(200).json({ message: 'updated successfully'})
-//   } else{
-//     return res.status(500).json({ message: 'failed'})
-//   }
+  let results = await Order.updateMany({ employeeName: user.name }, {employeePhoneNumber: 505050232})
+  if(results){
+    return res.status(200).json({ message: 'updated successfully'})
+  } else{
+    return res.status(500).json({ message: 'failed'})
+  }
 
 
-// }
+}
 
 module.exports = {
   employeeAccepted,
