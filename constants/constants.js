@@ -19,6 +19,7 @@ const constants = {
   skills:'/skills',
   rating:'/rating',
   success:'/success',
+  failure: '/failure',
   accept: '/accept',
   decline: '/decline',
   completed: '/completed'
