@@ -40,6 +40,14 @@ const ordersModelSchema = new mongoose.Schema({
   employeePhoneNumber: {
     type: Number,
     required: false
+  },
+  paystackRef: {
+    type: String,
+    required: false
+  },
+  paystackUrl: {
+    type: String,
+    required: false
   }
 });
 

@@ -2,94 +2,124 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 
+const { request } = require('http');
+const https = require('https')
 const Payments = require('../models/paymentModel');
+const ordersModel = require('../models/ordersModel')
 
 
-async function run(amount, description) {
-  let data = {}
-  const resp = await fetch(
-    `https://consumer-smrmapi.hubtel.com/request-money/bulk`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + Buffer.from('xqafsvei:akaabxkx').toString('base64')
-      },
-      body: JSON.stringify({
-        amount: amount,
-        title: 'HustleUp Payment',
-        description: description,
-        clientReference: 'string',
-        callbackUrl: 'https://51b9-102-176-112-194.eu.ngrok.io/payments/success',
-        cancellationUrl: 'https://51b9-102-176-112-194.eu.ngrok.io/payments/failure',
-      })
+async function paystackapi(orderId) {
+  //pass order Id as an argument to to store reference 
+
+  const params = JSON.stringify({
+    "email": "customer@email.com",
+    "amount": "2",
+    "currency": "GHS",
+    // "callback_url"
+  })
+
+  const options = {
+    hostname: 'api.paystack.co',
+    port: 443,
+    path: '/transaction/initialize',
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer sk_test_b2a9f860ee6484634ea61df305f795b8b467e688',
+      'Content-Type': 'application/json'
     }
-  );
+  }
 
-  data = await resp.json();
-  let paylinkUrl = data.data.paylinkUrl;
-  return paylinkUrl
+  let reference = ''
+  const req = async () => https.request(options, res => {
+    let data = ''
+
+    res.on('data', (chunk) => {
+      data += chunk
+    });
+
+    res.on('end', async () => {
+      console.log(JSON.parse(data))
+      reference = (JSON.parse(data)).data.reference;
+      paylink = (JSON.parse(data)).data.authorization_url;
+      console.log(`in reference: ${reference}`);
+      await ordersModel.findOneAndUpdate({_id: orderId}, {$set: {paystackRef: reference}, $set: {paystackUrl: paylink}})
+    })
+  }).on('error', error => {
+    console.error(error)
+  })
+
+  const result = await req();
+  result.write(params)
+  result.end()
+
+  console.log(`out reference ${reference}`)
+
+}
+
+
+async function verify() {
+
+  const options = {
+    hostname: 'api.paystack.co',
+    port: 443,
+    path: '/transaction/verify/5lkgn7qihp',
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer sk_live_239bb79499e1d22e5ffd5c4aa872240df559d508',
+    }
+  }
+
+  https.request(options, res => {
+    let data = ''
+
+    res.on('data', (chunk) => {
+      data += chunk
+    });
+
+    res.on('end', () => {
+      console.log(JSON.parse(data))
+    })
+  }).on('error', error => {
+    console.error(error)
+  })
 }
 
 
 
 const userPayment = async (req, res) => {
-  let { description, amount, userId, employeeId } = req.body;
+  let { description, amount, userId, employeeId, orderId } = req.body;
 
   amount = parseFloat(amount)
   await Payments.create({ description, amount, userId, employeeId })
+  await paystackapi(orderId);
+  
+  // await verify();
 
-  try {
-    let finalLink = await run(amount, description);
-    res.status(200).send(finalLink)
-  } catch (err) {
-    console.log(err)
-    res.status(500).send('Something went wrong')
-  }
+  res.send('done')
+
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 const employeePaymentController = async (req, res) => {
   let { amount, number } = req.body;
   amount = parseFloat(amount);
 
-  try {
-    async function run() {
-      const mobileNumber = number;
-      const resp = await fetch(
-        `https://consumer-smrmapi.hubtel.com/send-money/${mobileNumber}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Basic ' + Buffer.from('xqafsvei:akaabxkx').toString('base64')
-          },
-          body: JSON.stringify({
-            amount: amount,
-            title: 'HustleUp Payment',
-            description: 'Employee Receiving Payment',
-            clientReference: 'string',
-            callbackUrl: 'http://localhost:8000/payments/success',
-            cancellationUrl: 'http://localhost:8000/payments/failure',
-          })
-        }
-      );
 
-      const data = await resp.json();
-      console.log(data);
-    }
-
-    await run();
-    res.status(200).send('Success')
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Failure')
-
-  }
 }
 
 const successNotice = async (req, res) => {
+  console.log('successful url')
   res.send('Hubtel API was a seccess')
 }
 

@@ -24,7 +24,7 @@ const app = express();
 
 // variables from .env file
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 const dbURI = process.env.dbURI
 
 //middleware
