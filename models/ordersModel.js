@@ -48,6 +48,10 @@ const ordersModelSchema = new mongoose.Schema({
   paystackUrl: {
     type: String,
     required: false
+  },
+  paid: {
+    type: Boolean,
+    required: false
   }
 });
 

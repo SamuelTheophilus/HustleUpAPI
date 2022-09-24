@@ -1,7 +1,3 @@
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
-
 const { request } = require('http');
 const https = require('https')
 const Payments = require('../models/paymentModel');
@@ -121,16 +117,15 @@ const employeePaymentController = async (req, res) => {
 const successNotice = async (req, res) => {
   let reference = req.query.reference;
 
-  if(reference){
-    console.log(reference)
+  let success = await ordersModel.findOneAndUpdate({paystackRef: reference}, {$set: {paid: true}})
+  if (success ){
+    res.send('Hubtel API was a seccess')
   }
-  console.log('successful url')
-  res.send('Hubtel API was a seccess')
+  // console.log('successful url')
 }
 
 const failureNotice = async (req, res) => {
   res.send('Hubtel API was cancelled')
-
 }
 
 
