@@ -39,7 +39,7 @@ async function paystackapi(orderId, userEmail, amount) {
       reference = (JSON.parse(data)).data.reference;
       paylink = (JSON.parse(data)).data.authorization_url;
       console.log(`in reference: ${reference}`);
-      await ordersModel.findOneAndUpdate({_id: orderId}, {$set: {paystackRef: reference}, $set: {paystackUrl: paylink}})
+      await ordersModel.findByIdAndUpdate(orderId, {$set: {paystackRef: reference}, $set: {paystackUrl: paylink}})
     })
   }).on('error', error => {
     console.error(error)
@@ -52,8 +52,6 @@ async function paystackapi(orderId, userEmail, amount) {
   console.log(`out reference ${reference}`)
 
 }
-
-
 
 
 
@@ -74,31 +72,18 @@ const userPayment = async (req, res) => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 const employeePaymentController = async (req, res) => {
   let { amount, number } = req.body;
   amount = parseFloat(amount);
-
-
 }
 
 const successNotice = async (req, res) => {
   let reference = req.query.reference;
-
+  console.log('successful url')
   let success = await ordersModel.findOneAndUpdate({paystackRef: reference}, {$set: {paid: true}})
   if (success ){
-    res.send('Hubtel API was a seccess')
+    return res.send('Hubtel API was a seccess')
   }
-  // console.log('successful url')
 }
 
 const failureNotice = async (req, res) => {
