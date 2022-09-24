@@ -119,6 +119,9 @@ const employeePaymentController = async (req, res) => {
 }
 
 const successNotice = async (req, res) => {
+  if(req.query){
+    console.log(req.query)
+  }
   console.log('successful url')
   res.send('Hubtel API was a seccess')
 }
