@@ -2,14 +2,15 @@ const { request } = require('http');
 const https = require('https')
 const Payments = require('../models/paymentModel');
 const ordersModel = require('../models/ordersModel')
+const User = require('../models/generalUserModel');
 
 
-async function paystackapi(orderId) {
+async function paystackapi(orderId, userEmail, amount) {
   //pass order Id as an argument to to store reference 
 
   const params = JSON.stringify({
-    "email": "customer@email.com",
-    "amount": "2",
+    "email": userEmail,
+    "amount": amount,
     "currency": "GHS",
     // "callback_url"
   })
@@ -53,32 +54,6 @@ async function paystackapi(orderId) {
 }
 
 
-async function verify() {
-
-  const options = {
-    hostname: 'api.paystack.co',
-    port: 443,
-    path: '/transaction/verify/5lkgn7qihp',
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer sk_live_239bb79499e1d22e5ffd5c4aa872240df559d508',
-    }
-  }
-
-  https.request(options, res => {
-    let data = ''
-
-    res.on('data', (chunk) => {
-      data += chunk
-    });
-
-    res.on('end', () => {
-      console.log(JSON.parse(data))
-    })
-  }).on('error', error => {
-    console.error(error)
-  })
-}
 
 
 
@@ -87,7 +62,9 @@ const userPayment = async (req, res) => {
 
   amount = parseFloat(amount)
   await Payments.create({ description, amount, userId, employeeId })
-  await paystackapi(orderId);
+  let user = await User.findById(userId);
+
+  await paystackapi(orderId, user.email, amount.toString());
   
   // await verify();
 
