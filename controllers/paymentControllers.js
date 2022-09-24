@@ -39,7 +39,8 @@ async function paystackapi(orderId, userEmail, amount) {
       reference = (JSON.parse(data)).data.reference;
       paylink = (JSON.parse(data)).data.authorization_url;
       console.log(`in reference: ${reference}`);
-      await ordersModel.findByIdAndUpdate(orderId, {$set: {paystackRef: reference}, $set: {paystackUrl: paylink}})
+      let order = await ordersModel.findByIdAndUpdate(orderId, {$set: {paystackRef: reference, paystackUrl: paylink}}, {new: true})
+      console.log(order)
     })
   }).on('error', error => {
     console.error(error)
