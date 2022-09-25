@@ -69,7 +69,7 @@ const updateEmployee = (req, res) => {
 
 const employeeReview = async (req, res) => {
 
-  const review = req.body;
+  const { review } = req.body;
   const id = req.query.id;
 
   await generalUser.updateOne({ _id: id }, { $push: { reviews: review } })
@@ -98,7 +98,7 @@ const employeeAddSubcategories = async (req, res) => {
 
 // New Controllers
 
-async function  employeeUpdateBio (req, res)  {
+async function employeeUpdateBio(req, res) {
 
   const { bio } = req.body;
   const id = req.query.id;
@@ -114,29 +114,46 @@ const employeeUpdateSkills = async (req, res) => {
   const { skills } = req.body;
   const id = req.query.id;
 
-  const user = await generalUser.findByIdAndUpdate(id, { skills: skills }, { useFindAndModify: true });
+  const user = await generalUser.findByIdAndUpdate(id, { $set: { skills: skills } }, { useFindAndModify: true });
   if (user) {
     return res.status(200).json({ message: 'Skils Added' })
   }
 }
 
-const userAddRating = async (req, res)=>{
-  const {rating }=  req.body;
+const employeeUpdatePrice = async (req, res) => {
+  let { price } = req.body;
+  const id = req.query.id;
+
+  try {
+    const user = await generalUser.findByIdAndUpdate(id, { $set: { price: price } }, { new: true })
+    if (user) {
+      return res.status(200).json({ message: 'Price has been successfully added to your profile' })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Price could not be updated' })
+
+  }
+
+}
+
+const userAddRating = async (req, res) => {
+  const { rating } = req.body;
   const id = req.query.id;
 
   let user = await generalUser.findById(id)
-  if (user.rating){
+  if (user.rating) {
     let new_rating = Math.round((rating + user.rating) / 2)
-    
-    user = await generalUser.findOneAndUpdate({id},{rating: new_rating})
-    return res.status(200).json({message: 'Successfully added rating'})
 
-  } else if (!user.rating){
+    user = await generalUser.findByIdAndUpdate(id, { $set: { rating: new_rating } })
+    return res.status(200).json({ message: 'Successfully added rating' })
+
+  } else {
     let new_rating = rating
-    user = await generalUser.findOneAndUpdate({id},{rating: new_rating})
-    return res.status(200).json({message: 'Successfully added rating'})
+    user = await generalUser.findByIdAndUpdate(id, { $set: { rating: new_rating } })
+    return res.status(200).json({ message: 'Successfully added rating' })
   }
-  
+
 
 
 }
@@ -153,6 +170,7 @@ module.exports = {
   employeeReview,
   employeeAddSubcategories,
   employeeUpdateBio,
+  employeeUpdatePrice,
   employeeUpdateSkills,
   userAddRating
 }

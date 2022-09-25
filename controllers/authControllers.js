@@ -139,9 +139,10 @@ const employeesignup = async (req, res) => {
 
 const genUserSignup = async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
+  let reference = null
 
   try {
-    const user = await generalUsers.create({ name, email, password, phoneNumber });
+    const user = await generalUsers.create({ name, email, password, reference, phoneNumber });
     //generating the verificaation Token
     const verificationToken = user.generateVerificationToken();
 

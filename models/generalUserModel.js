@@ -55,6 +55,14 @@ const generalUsersSchema = new mongoose.Schema({
   skills:{
     type: String,
     required: false
+  },
+  price: {
+    type: Number,
+    required: false
+  },
+  image: {
+    type: String,
+    required: false
   }
 });
 

@@ -23,6 +23,7 @@ router.post(constants.employee + constants.subcategories + constants.ID, control
 router.post(constants.employee + constants.bio + constants.ID, controller.employeeUpdateBio);
 router.post(constants.employee + constants.skills + constants.ID, controller.employeeUpdateSkills);
 router.post(constants.employee + constants.rating + constants.ID, controller.userAddRating);
+router.post(constants.employee + constants.price + constants.ID, controller.employeeUpdatePrice);
 
 
 module.exports = router;

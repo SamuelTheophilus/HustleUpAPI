@@ -22,7 +22,9 @@ const constants = {
   failure: '/failure',
   accept: '/accept',
   decline: '/decline',
-  completed: '/completed'
+  completed: '/completed',
+  paymentlink: '/paymentlink',
+  price: '/price'
 }
 
 
