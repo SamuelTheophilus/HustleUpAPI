@@ -42,7 +42,19 @@ router.post(constants.employee + constants.price + constants.ID, controller.empl
 
 
 //extras for users
+
+//image upload
 router.post(constants.users + constants.image + constants.ID, upload.single('image'), controller.uploadImage)
+
+
+//become an employee
+/**
+ * reference
+ * skills
+ * category
+ * bio
+ */
+
 
 
 module.exports = router;

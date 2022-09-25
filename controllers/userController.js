@@ -67,19 +67,6 @@ const updateEmployee = (req, res) => {
 
 }
 
-const employeeReview = async (req, res) => {
-
-  const { review } = req.body;
-  const id = req.query.id;
-
-  await generalUser.updateOne({ _id: id }, { $push: { reviews: review } })
-    .then((result) => {
-      res.status(200).json({ message: 'Review was added was updated successfully' })
-    })
-    .catch((err) => { res.status(500).json({ message: err }) })
-}
-
-
 
 const employeeAddSubcategories = async (req, res) => {
 
@@ -136,6 +123,21 @@ const employeeUpdatePrice = async (req, res) => {
   }
 
 }
+
+const employeeReview = async (req, res) => {
+
+  const { review } = req.body;
+  const id = req.query.id;
+
+  await generalUser.updateOne({ _id: id }, { $push: { reviews: review } })
+    .then((result) => {
+      res.status(200).json({ message: 'Review was added was updated successfully' })
+    })
+    .catch((err) => { res.status(500).json({ message: err }) })
+}
+
+
+
 
 const userAddRating = async (req, res) => {
   const { rating } = req.body;

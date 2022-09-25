@@ -210,7 +210,7 @@ const verify = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     } else {
-      return res.status(200).json({ message: 'Account Verified' })
+      return res.status(200).json({ message: 'Account Verified, proceed to Login' })
     }
 
   } catch (error) {
