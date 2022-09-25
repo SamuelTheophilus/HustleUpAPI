@@ -158,6 +158,24 @@ const userAddRating = async (req, res) => {
 
 }
 
+const uploadImage = async (req, res) => {
+
+  let id = req.query.id
+  let image = req.file.path
+
+  try{
+    let userImage = await generalUser.findByIdAndUpdate(id, {$set: {image: image}})
+    if(userImage){
+      return res.status(200).json({message: 'Image Added'})
+    }
+
+  }catch(error){
+    console.log(error)
+    res.status(500).json({message: 'Error in adding image'})
+  }
+
+}
+
 
 
 
@@ -172,5 +190,6 @@ module.exports = {
   employeeUpdateBio,
   employeeUpdatePrice,
   employeeUpdateSkills,
-  userAddRating
+  userAddRating,
+  uploadImage
 }
