@@ -161,7 +161,10 @@ const userAddRating = async (req, res) => {
 const uploadImage = async (req, res) => {
 
   let id = req.query.id
-  let image = req.file.path
+  let image =`https://hustleup-api.herokuapp.com/${(req.file.path).substr(8)}` 
+  console.log(image);
+  
+
 
   try{
     let userImage = await generalUser.findByIdAndUpdate(id, {$set: {image: image}})
