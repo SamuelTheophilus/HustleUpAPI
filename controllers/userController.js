@@ -140,20 +140,36 @@ const employeeReview = async (req, res) => {
 
 
 const userAddRating = async (req, res) => {
-  const { rating } = req.body;
+  const { rating, review } = req.body;
   const id = req.query.id;
+
+  try{
+
+  
 
   let user = await generalUser.findById(id)
   if (user.rating) {
     let new_rating = Math.round((rating + user.rating) / 2)
 
-    user = await generalUser.findByIdAndUpdate(id, { $set: { rating: new_rating } })
+    let update = {
+      $set: { rating: new_rating },
+      $push: { reviews: review }
+    }
+
+    user = await generalUser.findByIdAndUpdate(id, update)
     return res.status(200).json({ message: 'Successfully added rating' })
 
   } else {
+    let update = {
+      $set: { rating: new_rating },
+      $push: { reviews: review }
+    }
     let new_rating = rating
-    user = await generalUser.findByIdAndUpdate(id, { $set: { rating: new_rating } })
+    user = await generalUser.findByIdAndUpdate(id, update)
     return res.status(200).json({ message: 'Successfully added rating' })
+  }}catch(error){
+    console.log(error)
+    res.status(500).json({message: 'Could not update'})
   }
 
 
@@ -163,20 +179,20 @@ const userAddRating = async (req, res) => {
 const uploadImage = async (req, res) => {
 
   let id = req.query.id
-  let image =`https://hustleup-api.herokuapp.com/${(req.file.path).substr(8)}` 
+  let image = `https://hustleup-api.herokuapp.com/${(req.file.path).substr(8)}`
   console.log(image);
-  
 
 
-  try{
-    let userImage = await generalUser.findByIdAndUpdate(id, {$set: {image: image}})
-    if(userImage){
-      return res.status(200).json({message: 'Image Added'})
+
+  try {
+    let userImage = await generalUser.findByIdAndUpdate(id, { $set: { image: image } })
+    if (userImage) {
+      return res.status(200).json({ message: 'Image Added' })
     }
 
-  }catch(error){
+  } catch (error) {
     console.log(error)
-    res.status(500).json({message: 'Error in adding image'})
+    res.status(500).json({ message: 'Error in adding image' })
   }
 
 }

@@ -26,7 +26,8 @@ const constants = {
   paymentlink: '/paymentlink',
   price: '/price',
   image: '/image',
-  hubtel:'/hubtel'
+  hubtel:'/hubtel',
+  becomeEmployee: '/becomeEmployee'
 }
 
 

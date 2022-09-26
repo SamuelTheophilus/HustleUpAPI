@@ -262,7 +262,7 @@ const passwordform = (req, res) => {
 
 async function passwordVerify(req, res) {
   const { email, password, password2 } = req.body;
-  
+
   const existing_user = await generalUsers.findOne({ email: email });
 
   if (!existing_user) {
@@ -279,7 +279,7 @@ async function passwordVerify(req, res) {
     let salt = await bcrypt.genSalt();
     new_password = await bcrypt.hash(password, salt);
 
-    let user = await generalUsers.findOneAndUpdate({ email: email }, { password: new_password }, {new: true})
+    let user = await generalUsers.findOneAndUpdate({ email: email }, { password: new_password }, { new: true })
 
     if (!user) {
       return res.status(400).send({ message: 'Password not set' });
@@ -294,6 +294,35 @@ async function passwordVerify(req, res) {
 
 }
 
+
+async function becomeEmployee(req, res) {
+  let { reference, bio, skills, price, category } = req.body
+  let id = req.query.id;
+
+  try {
+
+    const categoryObj = await categories.findOne({ name: `${category}` });
+    update = {
+      $set: { reference: reference },
+      $set: { bio: bio },
+      $set: { skills: skills },
+      $set: { price: price },
+      $push: { categoryId: categoryObj._id.toString() }
+    }
+
+    let user = generalUsers.findByIdAndUpdate(id, update);
+    if (user) {
+      return res.status(200).json({ message: 'Success' })
+    }
+  } catch (error) {
+    console.log(error)
+      res.status(400).json({ message: ' Error Occured While updating try again later' })
+  
+  }
+
+
+}
+
 module.exports = {
   login_post,
   employeesignup,
@@ -303,5 +332,5 @@ module.exports = {
   forgotPassword,
   passwordform,
   passwordVerify,
-
+  becomeEmployee
 }

@@ -11,6 +11,7 @@ router.get(constants.verify + constants.ID, controllers.verify)
 router.post(constants.users + constants.resetpassword, controllers.forgotPassword)
 router.get(constants.verify + constants.password + constants.ID, controllers.passwordform);
 router.post(constants.verify + constants.password, controllers.passwordVerify);
+router.post(constants.users + constants.becomeEmployee+ constants.ID, controllers.becomeEmployee)
 
 
 // Employee Controllers
