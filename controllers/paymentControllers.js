@@ -136,6 +136,7 @@ const successNotice = async (req, res) => {
 
 const success = async(req, res) =>{
   console.log(req.query)
+  console.log('Done')
   res.send('Done')
 }
 
