@@ -34,25 +34,25 @@ async function userPayment(amount, description, userId, orderId, number) {
 
 }
 
-async function employeePayment(amount,employeeId ) {
+async function employeePayment(amount, orderId, number) {
 
   let new_amount = parseFloat(amount)
 
   async function run() {
-    const mobileNumber = 'YOUR_mobileNumber_PARAMETER';
+    const mobileNumber = number;
     const resp = await fetch(
       `https://consumer-smrmapi.hubtel.com/send-money/${mobileNumber}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Basic ' + Buffer.from('<username>:<password>').toString('base64')
+          Authorization: 'Basic ' + Buffer.from('xqafsvei:akaabxkx').toString('base64')
         },
         body: JSON.stringify({
           amount: new_amount,
           title: 'HustleUp Payment',
           description: 'Payment On Completion of Service',
-          clientReference: employeeId,
+          clientReference: orderId,
           callbackUrl: 'https://hustleup-api.herokuapp.com/payments/employee/success',
           cancellationUrl: 'https://hustleup-api.herokuapp.com/payments/employee/failure',
         })
@@ -65,6 +65,12 @@ async function employeePayment(amount,employeeId ) {
 
   run();
 }
+
+
+
+
+//Controllers 
+
 const receivingMoney = async (req, res) => {
 
   let { description, amount, userId, employeeId, orderId, number } = req.body;
@@ -79,9 +85,23 @@ const receivingMoney = async (req, res) => {
 
 }
 
+const sendingMoney = async (req, res) => {
+
+  let { number, orderId, amount } = req.body;
+  let order = await ordersModel.findById(orderId);
+  if (order.paid) {
+    await employeePayment(amount, orderId, number)
+    return res.status(200).json({message: 'Payment Successful'})
+  } else{
+    return res.status(500).json({message: 'Payment Incomplete'})
+  }
+
+}
+
 
 module.exports = {
   receivingMoney,
+  sendingMoney
 }
 
 // client id: xqafsvei
