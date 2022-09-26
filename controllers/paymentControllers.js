@@ -135,7 +135,7 @@ const successNotice = async (req, res) => {
 }
 
 const success = async(req, res) =>{
-  console.log(reference)
+  console.log(req.query)
   res.send('Done')
 }
 
