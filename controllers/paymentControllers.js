@@ -136,8 +136,12 @@ const successNotice = async (req, res) => {
 
 const success = async(req, res) =>{
   console.log(req.query)
-  console.log('Done')
-  res.send('Done')
+  let orderId = req.query.reference
+  let success = await ordersModel.findByIdAndUpdate(orderId, {$set: {paid: true}})
+  if (success){
+    console.log('Done')
+    return res.send('Done')
+  }
 }
 
 const failureNotice = async (req, res) => {
