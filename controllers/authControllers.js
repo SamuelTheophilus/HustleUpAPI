@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const cookie = require('cookie-parser');
 const bcrypt = require('bcrypt');
+const path = require('path')
 
 
 
@@ -210,7 +211,8 @@ const verify = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     } else {
-      return res.status(200).json({ message: 'Account Verified, proceed to Login' })
+      return res.status(200).sendFile(path.join(__dirname, '../views/accountverified.html'))
+
     }
 
   } catch (error) {
@@ -284,7 +286,7 @@ async function passwordVerify(req, res) {
     if (!user) {
       return res.status(400).send({ message: 'Password not set' });
     } else {
-      return res.status(200).json({ message: 'New Password Reset' })
+      return res.status(200).sendFile(path.join(__dirname, '../views/passwordresetsuccess.html'))
     }
 
   } catch (error) {
@@ -323,6 +325,8 @@ async function becomeEmployee(req, res) {
 
 }
 
+
+
 module.exports = {
   login_post,
   employeesignup,
@@ -332,5 +336,6 @@ module.exports = {
   forgotPassword,
   passwordform,
   passwordVerify,
-  becomeEmployee
+  becomeEmployee,
+
 }

@@ -14,7 +14,7 @@ const ordersModelSchema = new mongoose.Schema({
     required: true,
   },
   employeeSkill: {
-    type: String,
+    type: String, 
     required: false,
   },
   description: {
