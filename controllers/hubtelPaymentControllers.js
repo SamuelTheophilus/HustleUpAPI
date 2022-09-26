@@ -5,6 +5,8 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 
 async function userPayment(amount, description, userId, orderId, number) {
 
+  let data = ''
+
   let new_amount = parseFloat(amount)
   async function run() {
     const mobileNumber = number;
@@ -27,11 +29,12 @@ async function userPayment(amount, description, userId, orderId, number) {
       }
     );
 
-    const data = await resp.json();
-    console.log(data);
+    data = await resp.json();
+    return data.data.paylinkUrl
   }
 
-  run();
+  let link = await run();
+  return link
 
 }
 
@@ -74,14 +77,17 @@ async function employeePayment(amount, orderId, number) {
 
 const receivingMoney = async (req, res) => {
 
-  let { description, amount, userId, employeeId, orderId, number } = req.body;
-  await userPayment(amount, description, userId, orderId, number);
-  let payment = await Payments.create({ description, amount, userId, employeeId });
+  try {
+    let { description, amount, userId, employeeId, orderId, number } = req.body;
+    let link = await userPayment(amount, description, userId, orderId, number);
+    let payment = await Payments.create({ description, amount, userId, employeeId });
 
-  if (payment) {
-    return res.send('Success');
-  } else {
-    return res.send('Failure');
+    if (payment) {
+      return res.status(200).json({ message: 'Success', link: link });
+    }
+
+  } catch (error) {
+    return res.status(200).json({message: 'No link generated'});
   }
 
 }
@@ -92,9 +98,9 @@ const sendingMoney = async (req, res) => {
   let order = await ordersModel.findById(orderId);
   if (order.paid) {
     await employeePayment(amount, orderId, number)
-    return res.status(200).json({message: 'Payment Successful'})
-  } else{
-    return res.status(500).json({message: 'Payment Incomplete'})
+    return res.status(200).json({ message: 'Payment Successful' })
+  } else {
+    return res.status(500).json({ message: 'Payment Incomplete' })
   }
 
 }
