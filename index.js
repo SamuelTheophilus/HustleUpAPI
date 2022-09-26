@@ -18,6 +18,7 @@ const requestRoutes = require('./routes/requestRoutes');
 const subcategoryRoutes = require('./routes/subcategoryRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const negotiationRoutes = require('./routes/negotiationRoutes');
+const hubtelRoutes = require('./routes/hubtelPaymentRoutes');
 
 
 // Other Dependencies
@@ -58,6 +59,7 @@ app.use(paymentRoutes)
 app.use(profileRoutes);
 app.use(requestRoutes);
 app.use(subcategoryRoutes);
+app.use(hubtelRoutes)
 
 
 module.exports = app;

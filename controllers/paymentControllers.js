@@ -134,6 +134,11 @@ const successNotice = async (req, res) => {
   }
 }
 
+const success = async(req, res) =>{
+  console.log(reference)
+  res.send('Done')
+}
+
 const failureNotice = async (req, res) => {
   res.send('Hubtel API was cancelled')
 }
@@ -147,6 +152,7 @@ module.exports = {
   employeePaymentController,
   successNotice,
   failureNotice,
-  getPaylink
+  getPaylink,
+  success
 }
 
