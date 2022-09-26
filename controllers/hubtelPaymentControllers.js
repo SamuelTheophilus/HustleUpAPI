@@ -20,7 +20,7 @@ async function userPayment(amount, description, userId, orderId, number) {
           title: 'HustleUp Payment',
           description: description,
           clientReference: userId,
-          callbackUrl: `https://hustleup-api.herokuapp.com/payments/success/?orderId=${orderId}`,
+          callbackUrl: `https://hustleup-api.herokuapp.com/payments/success`,
           cancellationUrl: 'https://hustleup-api.herokuapp.com/payments/failure',
         })
       }

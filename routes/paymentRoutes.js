@@ -11,7 +11,7 @@ router.post(constants.payments + constants.employee, controller.employeePaymentC
 router.get(constants.payments + constants.paymentlink, controller.getPaylink);
 
 // Paystack callback Routes
-router.get(constants.payments + constants.success + '/:orderId', controller.success)
+router.post(constants.payments + constants.success, controller.success)
 router.get(constants.payments + constants.failure, controller.failureNotice)
 
 
