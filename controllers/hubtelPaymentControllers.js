@@ -2,11 +2,11 @@ const Payments = require('../models/paymentModel');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 
-async function userPayment(amount, description, userId, orderId) {
+async function userPayment(amount, description, userId, orderId, number) {
 
   let new_amount = parseFloat(amount)
   async function run() {
-    const mobileNumber = '0551901127';
+    const mobileNumber = number;
     const resp = await fetch(
       `https://consumer-smrmapi.hubtel.com/request-money/${mobileNumber}`,
       {
@@ -37,8 +37,8 @@ async function userPayment(amount, description, userId, orderId) {
 
 const receivingMoney = async (req, res) => {
 
-  let { description, amount, userId, employeeId, orderId } = req.body;
-  await userPayment(amount, description, userId, orderId);
+  let { description, amount, userId, employeeId, orderId, number } = req.body;
+  await userPayment(amount, description, userId, orderId, number);
   let payment = await Payments.create({ description, amount, userId, employeeId });
 
   if (payment){
