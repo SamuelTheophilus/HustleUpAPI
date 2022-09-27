@@ -8,7 +8,9 @@ router.post(constants.payments, controller.userPayment)
 
 //Getting the Money
 router.post(constants.payments + constants.employee, controller.employeePaymentController)
-router.get(constants.payments + constants.paymentlink, controller.getPaylink);
+
+//actually for updating stuff
+router.post('/update', controller.getPaylink);
 
 // Hubtel callback Routes
 /** User Payment Callbacks*/

@@ -93,12 +93,13 @@ const login_post = async (req, res) => {
 
 const employeesignup = async (req, res) => {
   const { name, email, password, reference, phoneNumber, category } = req.body;
+  let image = null
 
   const categoryObj = await categories.findOne({ name: `${category}` });
 
   try {
     // creating the employee user
-    const user = await generalUsers.create({ name, email, password, reference, phoneNumber, categoryId: categoryObj._id.toString() });
+    const user = await generalUsers.create({ name, email, password, reference, phoneNumber, categoryId: categoryObj._id.toString(), image: image });
 
     //generating the verificaation Token
     const verificationToken = user.generateVerificationToken();
@@ -141,9 +142,10 @@ const employeesignup = async (req, res) => {
 const genUserSignup = async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
   let reference = null
+  let image = null
 
   try {
-    const user = await generalUsers.create({ name, email, password, reference, phoneNumber });
+    const user = await generalUsers.create({ name, email, password, reference, phoneNumber, image: image });
     //generating the verificaation Token
     const verificationToken = user.generateVerificationToken();
 
