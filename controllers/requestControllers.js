@@ -38,11 +38,13 @@ async function ordersList(name) {
     let description = name[i].description
     let senderName = name[i].username
     let location = name[i].location;
+    let senderPhoneNumber = name[i].phoneNumber
+    let employeePhoneNumber = employee.phoneNumber
     let userStatus = false
     let price = employee.price
 
 
-    const orders = await Order.create({ price, employeeName, status, employeeSkill, description, senderName, location, userStatus })
+    const orders = await Order.create({ price, employeeName, status, employeeSkill, description, senderName, location, userStatus, senderPhoneNumber, employeePhoneNumber })
     if (orders) {
       finalArray.push(orders);
     }
