@@ -110,7 +110,7 @@ const userPayment = async (req, res) => {
 const getPaylink = async (req, res) => {
   let { catId } = req.body;
 
-  let order = await User.findByIdAndUpdate(catId,{$set: {image: null}});
+  let order = await ordersModel.updateMany({status: 'D'},{$set: {price: '5'}});
   if(order){
     return res.send('success')
   }
