@@ -42,6 +42,7 @@ const employeeDeclined = async (req, res) => {
 
 const employeeCompleted = async (req, res) => {
   const id = req.query.id;
+  console.log(id);
   const { orderId } = req.body
   let user = await GeneralUser.findById(id)
 
