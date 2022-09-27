@@ -79,7 +79,7 @@ const receivingMoney = async (req, res) => {
 
   try {
     let { description, amount, userId, employeeId, orderId, number } = req.body;
-    let link = await userPayment(amount, description, userId, orderId, number);
+    // let link = await userPayment(amount, description, userId, orderId, number);
     let payment = await Payments.create({ description, amount, userId, employeeId });
 
     if (payment) {
