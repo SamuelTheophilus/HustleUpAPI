@@ -1,5 +1,5 @@
 const generalUser = require('../models/generalUserModel');
-const subcategories = require('../models/subCategoriesModel');
+const subcategories = require('../models/subcategoriesModel');
 
 
 // update the user from the database.

@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const generalUsers = require('../models/generalUserModel');
-const subcategories = require('../models/subCategoriesModel');
+const subcategories = require('../models/subcategoriesModel');
 const categories = require('../models/categoriesModel')
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
