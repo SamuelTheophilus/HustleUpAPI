@@ -15,7 +15,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const profileRoutes = require('./routes/userRoutes');
 const requestRoutes = require('./routes/requestRoutes');
-const subcategoryRoutes = require('./routes/subCategoryRoutes');
+const subCategoryRoutes = require('./routes/subCategoryRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const negotiationRoutes = require('./routes/negotiationRoutes');
 const hubtelRoutes = require('./routes/hubtelPaymentRoutes');
@@ -58,7 +58,7 @@ app.use(negotiationRoutes)
 app.use(paymentRoutes)
 app.use(profileRoutes);
 app.use(requestRoutes);
-app.use(subcategoryRoutes);
+app.use(subCategoryRoutes);
 app.use(hubtelRoutes)
 
 
