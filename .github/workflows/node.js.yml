@@ -69,6 +69,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./dockerfile
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/hustleup-api:tagname
