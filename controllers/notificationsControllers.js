@@ -45,7 +45,7 @@ const deleteNotfications = async (req, res) => {
   }
 }
 
-
+// Module exporting
 
 module.exports = {
   getAllNotfications,
