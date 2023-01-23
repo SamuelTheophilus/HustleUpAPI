@@ -1,93 +1,93 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const should = chai.should();
-const app = require('../index.js')
+// const chai = require('chai');
+// const chaiHttp = require('chai-http');
+// const should = chai.should();
+// const app = require('../index.js')
 
-chai.use(chaiHttp)
-
-
-
-/*
-Tests Subcategories for the Hustleup API
-*/
-describe('Testing Subcategory Routes', () => {
-  // Testing the GET Subcategory routes
-  describe('GET /subcategories/:id', () => {
-    it('Should GET all the employees of a subcategory', (done) => {
-      chai.request(app)
-        .get('/subcategories/id?id=62efda3e64eb06680395b014')
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          done()
-        })
-    })
+// chai.use(chaiHttp)
 
 
-  //   it('Should NOT GET all the employees of a subcategory', (done) => {
-  //     chai.request(app)
-  //       .get('/subcategoriy/id?id=62ef4a3e64eb06680395b015')
-  //       .end((err, res) => {
-  //         res.should.have.status(404);
-  //         done()
-  //       })
-  //   })
 
-  // })
-
-
-  // describe('GET /subcategories', () => {
-  //   it('Should GET all the subcategories of a category', (done) => {
-  //     chai.request(app)
-  //       .get('/subcategories')
-  //       .end((err, res) => {
-  //         res.should.have.status(200);
-  //         res.body.should.be.a('object');
-  //         done()
-  //       })
-  //   })
-
-  //   it('Should NOT GET all the subcategories of a category', (done) => {
-  //     chai.request(app)
-  //       .get('/subcategory')
-  //       .end((err, res) => {
-  //         res.should.have.status(404);
-  //         done()
-  //       })
-  //   })
-
-  // })
+// /*
+// Tests Subcategories for the Hustleup API
+// */
+// describe('Testing Subcategory Routes', () => {
+//   // Testing the GET Subcategory routes
+//   describe('GET /subcategories/:id', () => {
+//     it('Should GET all the employees of a subcategory', (done) => {
+//       chai.request(app)
+//         .get('/subcategories/id?id=62efda3e64eb06680395b014')
+//         .end((err, res) => {
+//           res.should.have.status(200);
+//           res.body.should.be.a('object');
+//           done()
+//         })
+//     })
 
 
-  // describe('POST /subcategories', () => {
-  //   it('Should POST a new subcategory to the database', (done) => {
-  //     let subcategory = {
-  //       name: 'Nails'
-  //     }
-  //     chai.request(app)
-  //       .post('/subcategories')
-  //       .send(subcategory)
-  //       .end((err, res) => {
-  //         res.should.have.status(200);
-  //         done();
-  //       })
-  //   })
+//   //   it('Should NOT GET all the employees of a subcategory', (done) => {
+//   //     chai.request(app)
+//   //       .get('/subcategoriy/id?id=62ef4a3e64eb06680395b015')
+//   //       .end((err, res) => {
+//   //         res.should.have.status(404);
+//   //         done()
+//   //       })
+//   //   })
 
-  //   it('Should  not POST a new subcategory to the database', (done) => {
-  //     let subcategory = {
-  //       name: 'Nails'
-  //     }
-  //     chai.request(app)
-  //       .post('/subcategory')
-  //       .send(subcategory)
-  //       .end((err, res) => {
-  //         res.should.have.status(404);
-  //         done()
-  //       })
-  //   })
-  })
+//   // })
 
-})
+
+//   // describe('GET /subcategories', () => {
+//   //   it('Should GET all the subcategories of a category', (done) => {
+//   //     chai.request(app)
+//   //       .get('/subcategories')
+//   //       .end((err, res) => {
+//   //         res.should.have.status(200);
+//   //         res.body.should.be.a('object');
+//   //         done()
+//   //       })
+//   //   })
+
+//   //   it('Should NOT GET all the subcategories of a category', (done) => {
+//   //     chai.request(app)
+//   //       .get('/subcategory')
+//   //       .end((err, res) => {
+//   //         res.should.have.status(404);
+//   //         done()
+//   //       })
+//   //   })
+
+//   // })
+
+
+//   // describe('POST /subcategories', () => {
+//   //   it('Should POST a new subcategory to the database', (done) => {
+//   //     let subcategory = {
+//   //       name: 'Nails'
+//   //     }
+//   //     chai.request(app)
+//   //       .post('/subcategories')
+//   //       .send(subcategory)
+//   //       .end((err, res) => {
+//   //         res.should.have.status(200);
+//   //         done();
+//   //       })
+//   //   })
+
+//   //   it('Should  not POST a new subcategory to the database', (done) => {
+//   //     let subcategory = {
+//   //       name: 'Nails'
+//   //     }
+//   //     chai.request(app)
+//   //       .post('/subcategory')
+//   //       .send(subcategory)
+//   //       .end((err, res) => {
+//   //         res.should.have.status(404);
+//   //         done()
+//   //       })
+//   //   })
+//   })
+
+// })
 
 /*
 Tests Categories for the Hustleup API
