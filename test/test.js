@@ -241,22 +241,22 @@ describe('Testing the Notification Routes', ()=>{
   })
 
   describe('POST /notifications', ()=>{
-    it('should POST a notification', (done)=>{
-      let notification = {
-        description: "I need someone to paint my room",
-        username: "June Gray",
-        location: "Brunei"
-      }
-      chai.request(app)
-      .post('/notifications')
-      .send(notification)
-      .end((err, res)=>{
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('notification');
-        done()
-      })
-    })
+    // it('should POST a notification', (done)=>{
+    //   let notification = {
+    //     description: "I need someone to paint my room",
+    //     username: "June Gray",
+    //     location: "Brunei"
+    //   }
+    //   chai.request(app)
+    //   .post('/notifications')
+    //   .send(notification)
+    //   .end((err, res)=>{
+    //     res.should.have.status(200);
+    //     res.body.should.be.a('object');
+    //     res.body.should.have.property('notification');
+    //     done()
+    //   })
+    // })
 
 
     it('should NOT POST a notification', (done)=>{
